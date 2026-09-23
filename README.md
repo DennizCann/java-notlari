@@ -9,6 +9,7 @@ Türkçe Java çalışma notlarından oluşan sade, statik bir web sitesi.
 3. Değişkenler ve Veri Tipleri
 4. Operatörler, Kontrol Yapıları ve Döngüler
 5. Diziler, Koleksiyonlar, Lambda ve Stream API
+6. Metotlar ve OOP
 
 HTML, CSS ve JavaScript kullanır. Kurulum, veritabanı veya derleme gerektirmez. `index.html` doğrudan tarayıcıda açılabilir. Sayfalar JavaScript olmadan da okunabilir.
 
