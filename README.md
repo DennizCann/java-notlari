@@ -14,4 +14,4 @@ HTML, CSS ve JavaScript kullanır. Kurulum, veritabanı veya derleme gerektirmez
 
 GitHub Pages ayarı: **Deploy from a branch → main → / (root)**.
 
-İçerik, özgün Word notlarındaki sırayı ve metni korur. Kod örnekleri gösterim amaçlıdır; sitede Java çalıştırıcısı bulunmaz.
+İçerik, özgün Word notlarına dayanır. İlk bölüm; kısa tarihçe, dil kıyaslamaları, JDK kurulumu, komut satırında çalıştırma ve IDE bilgileriyle genişletilmiştir. İndirme ve başvuru bağlantıları ilgili bölümlerdedir. Kod örnekleri gösterim amaçlıdır; sitede Java çalıştırıcısı bulunmaz.
