@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="tr" class="no-js">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Java’da İleri Konular ve Temel API’ler · Java Notları</title>
+<meta name="description" content="Scanner, exceptions, dosyalar ve I/O, generics, sıralama, yardımcı API’ler ve thread: açıklamalı Java örnekleri.">
+<meta name="theme-color" content="#173d32"><link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css"><script src="app.js" defer></script></head>
+<body id="top"><a class="skip-link" href="#icerik">İçeriğe geç</a>
+<header class="topbar"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">J.</span><span>Java <strong>Notları</strong></span></a><span class="topbar-caption">Türkçe çalışma notları</span><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar">☰ Konular</button></header>
+<div class="layout"><aside class="sidebar" id="sidebar"><p class="nav-label">KONU ANLATIMLARI</p><nav aria-label="Bölümler"><a href="index.html"><span class="chapter-number">01</span><span>Java Nasıl Çalışır?</span></a><a href="main-metodu.html"><span class="chapter-number">02</span><span>main method print ve comments</span></a><a href="degiskenler.html"><span class="chapter-number">03</span><span>Değişkenler ve Veri Tipleri</span></a><a href="operatorler-donguler.html"><span class="chapter-number">04</span><span>Operatörler ve Döngüler</span></a><a href="koleksiyonlar-stream.html"><span class="chapter-number">05</span><span>Koleksiyonlar ve Stream API</span></a><a href="metotlar-oop.html"><span class="chapter-number">06</span><span>Metotlar ve OOP</span></a><a href="ileri-konular-api.html" aria-current="page"><span class="chapter-number">07</span><span>Java’da İleri Konular ve Temel API’ler</span></a></nav><div class="sidebar-note"><span>JAVA TEMELLERİ</span><p>Çalışma mantığından<br>nesnelere.</p></div></aside>
+<main id="icerik" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">JAVA TEMELLERİ <span>/</span> BÖLÜM 07</p><h1>Java’da İleri Konular ve Temel API’ler</h1></div>
+<details class="mobile-toc"><summary>Bu bölümde</summary><nav aria-label="Bölüm içi bağlantılar"><a href="#scanner">7.1 Kullanıcı Girdisi: Scanner</a><a href="#exceptions">7.2 Hata Yönetimi: Exceptions</a><a href="#dosyalar">7.3 Dosyalar ve I/O</a><a href="#generics">7.4 Generics</a><a href="#siralama">7.5 Nesneleri Sıralama: Comparable ve Comparator</a><a href="#yardimci-api">7.6 Yardımcı API’ler</a><a href="#thread">7.7 Eşzamanlı Çalışmaya Giriş</a><a href="#soru-cevap">Soru — Cevap</a></nav></details>
+<article>
+<p>Metotlar ve OOP ile kurduğumuz temeli şimdi kullanıcı girdisi, hata yönetimi, dosyalar ve Java’nın hazır araçlarıyla tamamlayacağız. Bu bölüm, temel kursun son bölümüdür; Java’nın bütün uzmanlık alanlarını kapsamaz.</p>
+<p>Örnekler Java 21 ile hazırlanmıştır. Her kod kutusunu ayrı bir <code>Main.java</code> dosyası olarak çalıştırabilirsin. <code>import</code>, hazır bir tipi kısa adıyla kullanmamızı sağlar; kütüphane indirme komutu değildir. Buradaki API’ler JDK içinde gelir.</p>
+<h2 id="scanner">7.1 Kullanıcı Girdisi: Scanner</h2>
+<p><code>Scanner</code> metin girdisini okur. <code>System.in</code> klavyeden gelen standart girdidir. <code>next()</code> boşlukla ayrılan bir parçayı, <code>nextLine()</code> satırın kalanını, <code>nextInt()</code> tam sayı okur.</p>
+<pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">import</span> java.util.Scanner;
+
+<span class="keyword">public</span> <span class="keyword">class</span> Main {
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
+        try (Scanner input = <span class="keyword">new</span> Scanner(System.in)) {
+            System.out.println(<span class="string">&quot;Yaşınızı yazın:&quot;</span>);
+            <span class="keyword">int</span> age = input.nextInt();
+            input.nextLine(); <span class="comment">// Sayıdan sonra kalan satır sonunu tüket.</span>
+            System.out.println(<span class="string">&quot;Adınızı yazın:&quot;</span>);
+            String name = input.nextLine();
+            System.out.println(name + <span class="string">&quot;: &quot;</span> + age);
+        }
+    }
+}</code></pre>
+<p class="label">Örnek giriş: 25 / Deniz · Çıktı:</p><pre class="flow">Yaşınızı yazın:
+Adınızı yazın:
+Deniz: 25</pre>
+<h3>nextInt ile nextLine neden karışır?</h3>
+<p><code>nextInt()</code> sayıyı okur, satır sonunu tüketmez. Hemen ardından gelen <code>nextLine()</code> bu yüzden boş metin döndürebilir. Örnekte araya bir <code>nextLine()</code> koyarak satırın kalanını tükettik. Diğer yaklaşım bütün girdileri satır olarak okuyup <code>Integer.parseInt(input.nextLine())</code> ile dönüştürmektir.</p>
+<p>Sayı yerine metin girilirse <code>nextInt()</code>, <code>InputMismatchException</code> üretir. Öncesinde <code>hasNextInt()</code> ile kontrol edebilirsin; geçersiz girdiyi bir döngüde yeniden sorarken tüketmeyi unutma. Ondalıklı sayı okuma biçimi Scanner’ın yerel ayarına bağlıdır.</p>
+<p>Örnekte program biterken Scanner kapanır; bu, bağlı olduğu <code>System.in</code> akışını da kapatır. Daha uzun programlarda aynı girdi kaynağını paylaş, okumaya devam edeceksen erken kapatma. <code>try (...)</code> yapısını dosyalar konusunda açıklayacağız.</p>
+<h2 id="exceptions">7.2 Hata Yönetimi: Exceptions</h2>
+<p>Exception, bir işlem normal biçimde tamamlanamadığında oluşan nesnedir. Hatalı sayı dönüşümü veya bulunamayan dosya buna örnektir. <code>try</code> denenmek istenen işlemi, <code>catch</code> belirli hataya verilecek yanıtı içerir.</p>
+<pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">public</span> <span class="keyword">class</span> Main {
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
+        try {
+            <span class="keyword">int</span> age = Integer.parseInt(<span class="string">&quot;yirmi&quot;</span>);
+            System.out.println(age);
+        } catch (NumberFormatException e) {
+            System.out.println(<span class="string">&quot;Geçerli bir tam sayı girin.&quot;</span>);
+        } finally {
+            System.out.println(<span class="string">&quot;Deneme tamamlandı.&quot;</span>);
+        }
+    }
+}</code></pre>
+<p class="label">Çıktı:</p><pre class="flow">Geçerli bir tam sayı girin.
+Deneme tamamlandı.</pre>
+<p>Hata oluştuğunda try bloğunun kalan kısmı atlanır ve uygun catch aranır. <code>finally</code> normal akışta hata olsa da olmasa da çalışır; JVM’nin sonlandırılması gibi durumlarda çalışma garantisi yoktur. Kaynak kapatma için çoğunlukla try-with-resources kullanılır. Hataları boş catch ile sessizce yutma.</p>
+<h3>Checked, unchecked, throw ve throws</h3>
+<p><strong>Checked exception</strong> için derleyici, hatayı yakalamanı veya metodun <code>throws</code> bildirimine eklemeni ister; <code>IOException</code> buna örnektir. <strong>Unchecked exception</strong>, RuntimeException ve alt tipleridir; örneğin IllegalArgumentException. Bunlarda bu derleme zorunluluğu yoktur. <code>Error</code> türleri ise genellikle sıradan kullanıcı hatası gibi ele alınmaz.</p>
+<p><code>throw</code> belirli bir hata nesnesini fırlatır. <code>throws</code> metodun hangi hatayı çağırana aktarabileceğini bildirir; hatayı çözmez. Birden çok catch kullanırsan özel alt tipleri genel tiplerden önce yazmalısın.</p>
+<pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">class</span> InvalidScoreException <span class="keyword">extends</span> Exception {
+    InvalidScoreException(String message) {
+        <span class="keyword">super</span>(message);
+    }
+}
+
+<span class="keyword">public</span> <span class="keyword">class</span> Main {
+    <span class="keyword">static</span> <span class="keyword">void</span> checkScore(<span class="keyword">int</span> score) throws InvalidScoreException {
+        <span class="keyword">if</span> (score &lt; <span class="number">0</span> || score &gt; <span class="number">100</span>) {
+            throw <span class="keyword">new</span> InvalidScoreException(<span class="string">&quot;Puan 0–100 arasında olmalı.&quot;</span>);
+        }
+    }
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
+        try {
+            checkScore(<span class="number">120</span>);
+        } catch (InvalidScoreException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+}</code></pre>
+<p class="label">Çıktı:</p><pre class="flow">Puan 0–100 arasında olmalı.</pre>
+<p>Kendi hata tipimiz Exception’dan türediği için checked’dır. Her kontrol için özel sınıf gerekmez; geçersiz bir metot argümanı için hazır <code>IllegalArgumentException</code> da uygundur.</p>
+<h2 id="dosyalar">7.3 Dosyalar ve I/O</h2>
+<p>I/O, girdi ve çıktı işlemleridir. <code>Path</code> bir dosya veya klasör yolunu temsil eder; tek başına dosya oluşturmaz. <code>Files</code> dosyayı okuma, yazma, kopyalama ve silme gibi işlemler sunar. Göreli yollar programın çalışma klasörüne göre çözülür.</p>
+<pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">import</span> java.io.IOException;
+<span class="keyword">import</span> java.nio.charset.StandardCharsets;
+<span class="keyword">import</span> java.nio.file.Files;
+<span class="keyword">import</span> java.nio.file.Path;
+
+<span class="keyword">public</span> <span class="keyword">class</span> Main {
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
+        try {
+            Path file = Files.createTempFile(<span class="string">&quot;java-notlari-&quot;</span>, <span class="string">&quot;.txt&quot;</span>);
+            try {
+                Files.writeString(file, <span class="string">&quot;Merhaba Java!&quot;</span>, StandardCharsets.UTF_8);
+                String text = Files.readString(file, StandardCharsets.UTF_8);
+                System.out.println(text);
+            } finally {
+                Files.deleteIfExists(file);
+            }
+        } catch (IOException e) {
+            System.out.println(<span class="string">&quot;Dosya işlemi başarısız: &quot;</span> + e.getMessage());
+        }
+    }
+}</code></pre>
+<p class="label">Çıktı:</p><pre class="flow">Merhaba Java!</pre>
+<p>Örnek geçici bir dosya oluşturur, UTF-8 metin yazar, okur ve temizler. Kalıcı bir dosya için <code>Path.of("notlar.txt")</code> kullanılabilir. <code>writeString</code> varsayılan olarak mevcut içeriğin üzerine yazar; ekleme için <code>StandardOpenOption.CREATE</code> ve <code>StandardOpenOption.APPEND</code> seçenekleri verilebilir.</p>
+<h3>Byte akışı, karakter akışı ve kaynak kapatma</h3>
+<p><code>InputStream / OutputStream</code> byte verisiyle çalışır; resim ve PDF gibi ikili dosyalarda kullanılır. <code>Reader / Writer</code> karakterlerle çalışır; metni byte’a çevirirken UTF-8 gibi bir kodlama devreye girer. BufferedReader ve BufferedWriter, işlemleri tamponlayarak küçük okuma/yazmaları biriktirir.</p>
+<pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">import</span> java.io.BufferedReader;
+<span class="keyword">import</span> java.io.IOException;
+<span class="keyword">import</span> java.io.StringReader;
+
+<span class="keyword">public</span> <span class="keyword">class</span> Main {
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
+        try (BufferedReader reader = <span class="keyword">new</span> BufferedReader(
+                <span class="keyword">new</span> StringReader(<span class="string">&quot;Java\nOOP&quot;</span>))) {
+            String line;
+            while ((line = reader.readLine()) != <span class="keyword">null</span>) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            System.out.println(<span class="string">&quot;Okuma başarısız.&quot;</span>);
+        }
+    }
+}</code></pre>
+<p class="label">Çıktı:</p><pre class="flow">Java
+OOP</pre>
+<p>Bu örnekte dosya yerine bellekteki metni okuduk. Dosyada aynı döngü <code>Files.newBufferedReader(path, StandardCharsets.UTF_8)</code> ile kullanılabilir. <code>readLine()</code> dosya sonunda null döndürür; boş satır ise boş String’dir.</p>
+<p><strong>Try-with-resources</strong>, parantezde oluşturulan AutoCloseable kaynakları blok sonunda hata olsa bile kapatır. Birden fazla kaynak ters sırayla kapatılır. <code>readString</code> bütün içeriği belleğe alır; büyük metinlerde satır satır okumak daha uygundur. Buradaki I/O akışları, 5. bölümdeki koleksiyonları işleyen Stream API ile aynı kavram değildir.</p>
+<h2 id="generics">7.4 Generics</h2>
+<p>Generics, bir sınıf veya metodun çalışacağı türü parametre yapar. <code>List&lt;String&gt;</code> bunun tanıdık örneğidir. Yanlış türlerin eklenmesini derleme sırasında yakalar ve gereksiz cast işlemlerini azaltır.</p>
+<pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">class</span> Box&lt;T&gt; {
+    <span class="keyword">private</span> <span class="keyword">final</span> T value;
+
+    Box(T value) {
+        <span class="keyword">this</span>.value = value;
+    }
+
+    T get() {
+        <span class="keyword">return</span> value;
+    }
+}
+
+<span class="keyword">public</span> <span class="keyword">class</span> Main {
+    <span class="keyword">static</span> &lt;T&gt; T first(T[] items) {
+        <span class="keyword">if</span> (items.length == <span class="number">0</span>) {
+            throw <span class="keyword">new</span> IllegalArgumentException(<span class="string">&quot;Dizi boş olamaz.&quot;</span>);
+        }
+        <span class="keyword">return</span> items[<span class="number">0</span>];
+    }
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
+        Box&lt;String&gt; box = <span class="keyword">new</span> Box&lt;&gt;(<span class="string">&quot;Java&quot;</span>);
+        System.out.println(box.get());
+        System.out.println(first(<span class="keyword">new</span> Integer[]{<span class="number">10</span>, <span class="number">20</span>}));
+    }
+}</code></pre>
+<p class="label">Çıktı:</p><pre class="flow">Java
+10</pre>
+<p><code>T</code> bir tür parametresidir; adı zorunlu olarak T olmak zorunda değildir. Generic metotta <code>&lt;T&gt;</code> dönüş tipinden önce gelir. <code>&lt;&gt;</code> ile derleyici türü bağlamdan çıkarır. Primitive yerine wrapper kullanılır: <code>Box&lt;Integer&gt;</code> geçerlidir, <code>Box&lt;int&gt;</code> değildir.</p>
+<h3>Bounds ve wildcard</h3>
+<p><code>&lt;T extends Number&gt;</code>, kabul edilen türleri Number ve alt tipleriyle sınırlar. <code>?</code> ise türü bilinmeyen bir parametreyi gösterir. List&lt;Integer&gt;, List&lt;Number&gt;’ın alt tipi değildir; bu nedenle ortak okuma işlemlerinde wildcard kullanırız.</p>
+<pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">import</span> java.util.ArrayList;
+<span class="keyword">import</span> java.util.List;
+
+<span class="keyword">public</span> <span class="keyword">class</span> Main {
+    <span class="keyword">static</span> <span class="keyword">double</span> total(List&lt;? <span class="keyword">extends</span> Number&gt; numbers) {
+        <span class="keyword">double</span> result = <span class="number">0</span>;
+        for (Number number : numbers) {
+            result += number.doubleValue();
+        }
+        <span class="keyword">return</span> result;
+    }
+
+    <span class="keyword">static</span> <span class="keyword">void</span> addOne(List&lt;? <span class="keyword">super</span> Integer&gt; numbers) {
+        numbers.add(<span class="number">1</span>);
+    }
+
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
+        System.out.println(total(List.of(<span class="number">10</span>, <span class="number">20</span>)));
+        List&lt;Number&gt; numbers = <span class="keyword">new</span> ArrayList&lt;&gt;();
+        addOne(numbers);
+        System.out.println(numbers);
+    }
+}</code></pre>
+<p class="label">Çıktı:</p><pre class="flow">30.0
+[1]</pre>
+<p><code>? extends Number</code> ile Number olarak okuyabiliriz; gerçek alt tür bilinmediği için null dışında eleman ekleyemeyiz. <code>? super Integer</code> ile Integer ekleyebiliriz, fakat okunan elemanın garantili tipi Object’tir. Ham <code>List</code> kullanmak tür kontrolünü zayıflatır; tür parametresini belirt.</p>
+<h2 id="siralama">7.5 Nesneleri Sıralama: Comparable ve Comparator</h2>
+<p>Sayı ve String sıralamasını gördük. Kendi sınıfımızın nesnelerinde hangi ölçütün kullanılacağını belirtmemiz gerekir. <code>Comparable</code> sınıfın doğal sırasını, <code>Comparator</code> dışarıdan seçilen sıralama ölçütünü tanımlar.</p>
+<pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">import</span> java.util.ArrayList;
+<span class="keyword">import</span> java.util.Comparator;
+<span class="keyword">import</span> java.util.List;
+
+<span class="keyword">class</span> Student <span class="keyword">implements</span> Comparable&lt;Student&gt; {
+    <span class="keyword">final</span> String name;
+    <span class="keyword">final</span> <span class="keyword">int</span> score;
+
+    Student(String name, <span class="keyword">int</span> score) {
+        <span class="keyword">this</span>.name = name;
+        <span class="keyword">this</span>.score = score;
+    }
+
+    @Override
+    <span class="keyword">public</span> <span class="keyword">int</span> compareTo(Student other) {
+        <span class="keyword">return</span> name.compareTo(other.name);
+    }
+
+    @Override
+    <span class="keyword">public</span> String toString() {
+        <span class="keyword">return</span> name + <span class="string">&quot;:&quot;</span> + score;
+    }
+}
+
+<span class="keyword">public</span> <span class="keyword">class</span> Main {
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
+        List&lt;Student&gt; students = <span class="keyword">new</span> ArrayList&lt;&gt;(List.of(
+            <span class="keyword">new</span> Student(<span class="string">&quot;Deniz&quot;</span>, <span class="number">80</span>), <span class="keyword">new</span> Student(<span class="string">&quot;Ece&quot;</span>, <span class="number">95</span>)));
+        System.out.println(students.stream().sorted().toList());
+        Comparator&lt;Student&gt; byScore = Comparator
+            .comparingInt((Student s) -&gt; s.score).reversed()
+            .thenComparing(s -&gt; s.name);
+        students.sort(byScore);
+        System.out.println(students);
+    }
+}</code></pre>
+<p class="label">Çıktı:</p><pre class="flow">[Deniz:80, Ece:95]
+[Ece:95, Deniz:80]</pre>
+<p><code>compareTo</code> sonucu negatifse önce, sıfırsa aynı sıra düzeyinde, pozitifse sonra gelir; yalnızca −1, 0, 1 dönmesi gerekmez. Sayısal karşılaştırmada çıkarma yerine <code>Integer.compare(a, b)</code> taşma riskini önler.</p>
+<p><code>reversed()</code> puan sırasını ters çevirir; <code>thenComparing</code> eşit puanları ada göre sıralar. <code>List.sort</code> listeyi değiştirir. <code>stream().sorted(byScore).toList()</code> ise kaynak listeyi değiştirmeden sonuç üretir.</p>
+<p>Örnek doğal sırayı yalnızca ada göre tanımlar; aynı adlı iki öğrenci karşılaştırmada 0 verebilir. TreeSet ve TreeMap bunu aynı sıra anahtarı olarak ele alır. Bu yapılarda beklenen küme/harita davranışı için sıralama ile <code>equals</code> tutarlı tasarlanmalıdır; burada yalnızca List sıralıyoruz.</p>
+<h2 id="yardimci-api">7.6 Yardımcı API’ler</h2>
+<h3>Tarih ve saat</h3>
+<p><code>LocalDate</code> tarih, <code>LocalTime</code> saat, <code>LocalDateTime</code> tarih ve saat tutar; saat dilimi içermezler. Bir anı zaman çizgisinde tutmak için Instant, saat dilimiyle birlikte göstermek için ZonedDateTime kullanılır. Bu türler değişmezdir; plusDays gibi işlemler yeni değer döndürür.</p>
+<pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">import</span> java.time.LocalDate;
+<span class="keyword">import</span> java.time.format.DateTimeFormatter;
+<span class="keyword">import</span> java.time.temporal.ChronoUnit;
+
+<span class="keyword">public</span> <span class="keyword">class</span> Main {
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
+        LocalDate start = LocalDate.of(<span class="number">2026</span>, <span class="number">9</span>, <span class="number">24</span>);
+        LocalDate end = start.plusDays(<span class="number">7</span>);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern(<span class="string">&quot;dd.MM.yyyy&quot;</span>);
+        System.out.println(end.format(format));
+        System.out.println(ChronoUnit.DAYS.between(start, end));
+    }
+}</code></pre>
+<p class="label">Çıktı:</p><pre class="flow">01.10.2026
+7</pre>
+<p>Bugünün tarihi için <code>LocalDate.now()</code>, ISO biçimindeki metni okumak için <code>LocalDate.parse("2026-09-24")</code> kullanılabilir. Örnekte sonuç sabit olsun diye tarihi açıkça verdik.</p>
+<h3>Math, rastgele sayılar, StringBuilder ve regex</h3>
+<p><code>Math</code> hazır matematik işlemleri sunar. <code>Random.nextInt(6)</code>, 0 dahil 6 hariç sayı üretir; 1 ekleyerek zar aralığına ulaşırız. Güvenlik amacıyla gereken rastgele değerlerde SecureRandom kullanılır.</p>
+<p>String değişmezdir. <code>StringBuilder</code>, özellikle döngüde metni parça parça oluşturmak için değiştirilebilir bir yapı sunar. <code>append</code> ekler, <code>toString</code> sonucu String’e çevirir. <strong>Regex</strong>, metindeki örüntüleri tanımlar; <code>matches</code> bütün metni kontrol eder, Matcher’ın <code>find()</code> metodu ise eşleşen parçaları arar.</p>
+<pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">import</span> java.util.Random;
+
+<span class="keyword">public</span> <span class="keyword">class</span> Main {
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
+        System.out.println(Math.max(<span class="number">10</span>, <span class="number">25</span>));
+        System.out.println(Math.sqrt(<span class="number">81</span>));
+        <span class="keyword">int</span> dice = <span class="keyword">new</span> Random().nextInt(<span class="number">6</span>) + <span class="number">1</span>;
+        System.out.println(dice &gt;= <span class="number">1</span> &amp;&amp; dice &lt;= <span class="number">6</span>);
+        StringBuilder text = <span class="keyword">new</span> StringBuilder(<span class="string">&quot;Java&quot;</span>);
+        text.append(<span class="string">&quot; &quot;</span>).append(<span class="string">&quot;Notları&quot;</span>);
+        System.out.println(text.toString());
+        System.out.println(<span class="string">&quot;1234&quot;</span>.matches(<span class="string">&quot;\\d{4}&quot;</span>));
+    }
+}</code></pre>
+<p class="label">Çıktı:</p><pre class="flow">25
+9.0
+true
+Java Notları
+true</pre>
+<p>Regex’te <code>\d</code> rakamı, <code>{4}</code> dört tekrarı belirtir. Java String’inde ters eğik çizgi de kaçırıldığı için kodda <code>"\\d{4}"</code> yazarız. Rastgele sayının kendisi değişse de örnekteki aralık kontrolü her zaman true’dur. Sık kullanılan karmaşık bir örüntü için <code>Pattern.compile</code> ile Pattern oluşturup tekrar kullanabiliriz.</p>
+<h2 id="thread">7.7 Eşzamanlı Çalışmaya Giriş</h2>
+<p>Thread, program içindeki bir yürütme akışıdır. Birden fazla iş ilerleyebilir; ancak bu, her zaman fiziksel olarak aynı anda çalıştıkları anlamına gelmez. <code>Runnable</code> yapılacak işi, <code>Thread</code> bu işin çalışacağı akışı temsil eder.</p>
+<pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">public</span> <span class="keyword">class</span> Main {
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) throws InterruptedException {
+        Runnable task = () -&gt; System.out.println(<span class="string">&quot;İş tamamlandı.&quot;</span>);
+        Thread worker = <span class="keyword">new</span> Thread(task);
+        worker.start();
+        worker.join();
+        System.out.println(<span class="string">&quot;Ana akış devam ediyor.&quot;</span>);
+    }
+}</code></pre>
+<p class="label">Çıktı:</p><pre class="flow">İş tamamlandı.
+Ana akış devam ediyor.</pre>
+<p><code>start()</code> yeni akışı başlatır. Doğrudan <code>run()</code> çağırmak işi mevcut akışta yürütür. <code>join()</code>, worker bitene kadar çağıran akışı bekletir; bu yüzden örnekte çıktı sırası bellidir. Bekleme kesilirse InterruptedException oluşabilir; örnekte main bunu throws ile bildirir.</p>
+<h3>Paylaşılan veriye dikkat</h3>
+<p>İki thread aynı değişkeni değiştirirse <strong>race condition</strong> oluşabilir. <code>count++</code> tek ve bölünmez bir işlem değildir. Kritik bölgeyi aynı kilitle <code>synchronized</code> kullanarak koruyabilir veya sayaç için <code>AtomicInteger.incrementAndGet()</code> seçebiliriz. <code>volatile</code> tek başına count++ işlemini atomik yapmaz.</p>
+<p>Thread.sleep bir eşgüdüm garantisi sağlamaz. Çok sayıda işte her iş için elle thread yönetmek yerine ExecutorService gibi araçlar kullanılabilir. Şimdilik işi tanımlama, başlatma, bekleme ve ortak veriyi koruma ayrımını bilmek yeterli.</p>
+<h2 id="soru-cevap">Soru — Cevap</h2>
+<p class="question">Soru: nextInt sonrasında nextLine neden boş dönebilir?</p><p class="answer">Cevap: Sayı okunduktan sonra satır sonu girdide kalır; nextLine satırın kalanını okur.</p>
+<p class="question">Soru: throw ile throws aynı mı?</p><p class="answer">Cevap: Hayır. throw hata nesnesini fırlatır; throws metodun aktarabileceği hata tipini bildirir.</p>
+<p class="question">Soru: Path.of dosya oluşturur mu?</p><p class="answer">Cevap: Hayır. Yolu temsil eder; dosya oluşturma ve yazma ayrı işlemlerdir.</p>
+<p class="question">Soru: Try-with-resources neyi kolaylaştırır?</p><p class="answer">Cevap: AutoCloseable kaynakların bloktan çıkılırken kapatılmasını.</p>
+<p class="question">Soru: Dosya akışı ile Stream API aynı şey mi?</p><p class="answer">Cevap: Hayır. I/O akışları veri okuma/yazma, Stream API ise elemanlar üzerinde işlem hattı kurma amacı taşır.</p>
+<p class="question">Soru: List&lt;Integer&gt;, List&lt;Number&gt; yerine doğrudan verilir mi?</p><p class="answer">Cevap: Hayır. Yalnızca okuma gereken uygun bir metot List&lt;? extends Number&gt; kabul edebilir.</p>
+<p class="question">Soru: Comparable ve Comparator ne zaman kullanılır?</p><p class="answer">Cevap: Comparable doğal sıra için; Comparator farklı veya dışarıdan belirlenen sıralama ölçütleri için.</p>
+<p class="question">Soru: LocalDate.plusDays mevcut tarihi değiştirir mi?</p><p class="answer">Cevap: Hayır. Yeni bir LocalDate döndürür; sonucu kullanmak veya atamak gerekir.</p>
+<p class="question">Soru: Thread.run yeni thread başlatır mı?</p><p class="answer">Cevap: Hayır. Yeni yürütme akışı için start kullanılır.</p>
+<p class="question">Soru: count++ birden fazla thread için güvenli mi?</p><p class="answer">Cevap: Ortak değiştirilebilir sayaçta tek başına güvenli değildir; uygun eşgüdüm gerekir.</p>
+<p>Başvuru: <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Scanner.html">Scanner</a> · <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html">Files</a> · <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Thread.html">Thread</a>.</p>
+</article><nav class="pagination" aria-label="Bölümler arası geçiş"><a href="metotlar-oop.html"><small>Önceki bölüm</small>Metotlar ve OOP</a><a href="#top"><small>Bölüm sonu</small>Başa dön ↑</a></nav><footer>Java Notları <span>·</span> 7 / 7</footer></main>
+<aside class="toc"><p class="nav-label">BU BÖLÜMDE</p><nav aria-label="Sayfa içindekiler"><a href="#scanner">7.1 Kullanıcı Girdisi: Scanner</a><a href="#exceptions">7.2 Hata Yönetimi: Exceptions</a><a href="#dosyalar">7.3 Dosyalar ve I/O</a><a href="#generics">7.4 Generics</a><a href="#siralama">7.5 Nesneleri Sıralama: Comparable ve Comparator</a><a href="#yardimci-api">7.6 Yardımcı API’ler</a><a href="#thread">7.7 Eşzamanlı Çalışmaya Giriş</a><a href="#soru-cevap">Soru — Cevap</a></nav></aside></div></body></html>

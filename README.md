@@ -10,6 +10,7 @@ Türkçe Java çalışma notlarından oluşan sade, statik bir web sitesi.
 4. Operatörler, Kontrol Yapıları ve Döngüler
 5. Diziler, Koleksiyonlar, Lambda ve Stream API
 6. Metotlar ve OOP
+7. Java’da İleri Konular ve Temel API’ler
 
 HTML, CSS ve JavaScript kullanır. Kurulum, veritabanı veya derleme gerektirmez. `index.html` doğrudan tarayıcıda açılabilir. Sayfalar JavaScript olmadan da okunabilir.
 
