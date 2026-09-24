@@ -4,7 +4,7 @@ Türkçe Java çalışma notlarından oluşan sade, statik bir web sitesi.
 
 ## İçerik
 
-1. Java Nasıl Çalışır? — JDK, JRE, JVM
+1. Giriş — kullanım alanları, sürümler, JDK, bytecode ve IDE’ler
 2. İlk Java Programı ve main Metodu
 3. Değişkenler ve Veri Tipleri
 4. Operatörler, Kontrol Yapıları ve Döngüler

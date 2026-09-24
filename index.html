@@ -1,32 +1,77 @@
 <!doctype html>
 <html lang="tr" class="no-js">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Java Nasıl Çalışır? · Java Notları</title>
+<title>Giriş · Java Notları</title>
 <meta name="description" content="Java’ya kısa giriş: tarihçe, JDK kurulumu, JVM, komut satırında ilk program ve IDE seçenekleri.">
 <meta name="theme-color" content="#173d32"><link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css?v=3"><script src="app.js" defer></script></head>
 <body id="top"><a class="skip-link" href="#icerik">İçeriğe geç</a>
 <header class="topbar"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">J.</span><span>Java <strong>Notları</strong></span></a><span class="topbar-caption">Türkçe çalışma notları</span><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar">☰ Konular</button></header>
-<div class="layout"><aside class="sidebar" id="sidebar"><p class="nav-label">KONU ANLATIMLARI</p><nav aria-label="Bölümler"><a href="index.html" aria-current="page"><span class="chapter-number">01</span><span>Java Nasıl Çalışır?</span></a><a href="main-metodu.html"><span class="chapter-number">02</span><span>main method print ve comments</span></a><a href="degiskenler.html"><span class="chapter-number">03</span><span>Değişkenler ve Veri Tipleri</span></a><a href="operatorler-donguler.html"><span class="chapter-number">04</span><span>Operatörler ve Döngüler</span></a><a href="koleksiyonlar-stream.html"><span class="chapter-number">05</span><span>Koleksiyonlar ve Stream API</span></a><a href="metotlar-oop.html"><span class="chapter-number">06</span><span>Metotlar ve OOP</span></a><a href="ileri-konular-api.html"><span class="chapter-number">07</span><span>Java’da İleri Konular ve Temel API’ler</span></a></nav><div class="sidebar-note"><span>JAVA TEMELLERİ</span><p>Çalışma mantığından<br>nesnelere.</p></div></aside>
-<main id="icerik" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">JAVA TEMELLERİ <span>/</span> BÖLÜM 01</p><h1>Java’ya Başlangıç ve Çalışma Mantığı</h1></div>
+<div class="layout"><aside class="sidebar" id="sidebar"><p class="nav-label">KONU ANLATIMLARI</p><nav aria-label="Bölümler"><a href="index.html" aria-current="page"><span class="chapter-number">01</span><span>Giriş</span></a><a href="main-metodu.html"><span class="chapter-number">02</span><span>main method print ve comments</span></a><a href="degiskenler.html"><span class="chapter-number">03</span><span>Değişkenler ve Veri Tipleri</span></a><a href="operatorler-donguler.html"><span class="chapter-number">04</span><span>Operatörler ve Döngüler</span></a><a href="koleksiyonlar-stream.html"><span class="chapter-number">05</span><span>Koleksiyonlar ve Stream API</span></a><a href="metotlar-oop.html"><span class="chapter-number">06</span><span>Metotlar ve OOP</span></a><a href="ileri-konular-api.html"><span class="chapter-number">07</span><span>Java’da İleri Konular ve Temel API’ler</span></a></nav><div class="sidebar-note"><span>JAVA TEMELLERİ</span><p>Çalışma mantığından<br>nesnelere.</p></div></aside>
+<main id="icerik" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">JAVA TEMELLERİ <span>/</span> BÖLÜM 01</p><h1>Giriş</h1></div>
 <details class="mobile-toc"><summary>Bu bölümde</summary><nav aria-label="Bölüm içi bağlantılar"><a href="#java-tarihce">1.1 Java’yı Tanıyalım</a><a href="#konu-1">1.2 Java’nın Çalışma Mantığı</a><a href="#jdk-kurulumu">1.3 Kurulum ve İlk Program</a><a href="#ide">1.4 IDE ile Çalışma</a><a href="#konu-4">Soru — Cevap</a></nav></details>
 <article><h2 id="java-tarihce">1.1 Java’yı Tanıyalım</h2>
 <h3>Java Nedir? Kısaca Tarihçesi</h3><p>Java, 1995’te Sun Microsystems tarafından duyurulan bir programlama dili ve platformudur. Sunucu uygulamaları, kurumsal sistemler ve masaüstü yazılımları geliştirmek için kullanılır. <a href="https://www.java.com/download/help/whatis_java.html">Java hakkında</a></p>
 <p>Temel fikir, aynı programı uyumlu bir Java çalışma ortamı bulunan farklı işletim sistemlerinde çalıştırabilmektir. Aşağıdaki JDK, JRE ve JVM kavramları bu yapıyı açıklar.</p>
 
-<h3 id="dillerle-kiyaslama">Diğer Dillerle Kısa Kıyaslama</h3>
+<h3 id="dillerle-kiyaslama">Java ve Diğer Diller Nerelerde Kullanılır?</h3>
+<p>Aynı uygulamada birden fazla dil kullanılabilir. Örneğin bir alışveriş sitesinin tarayıcıdaki ekranları JavaScript, siparişleri işleyen sunucusu Java, veri analizleri Python ile yazılabilir. Aşağıdaki alanlar kesin sınırlar değil, yaygın kullanım örnekleridir.</p>
 <ul class="intro-list">
-<li><strong>Python:</strong> Değişken tanımlarken genellikle tür adı yazılmaz; Java’da değişkenlerin türü derleme sırasında bellidir. Python hızlı betikler yazmak için de sık kullanılır. <a href="https://docs.python.org/3/tutorial/">Python rehberi</a></li>
-<li><strong>JavaScript:</strong> Web sayfalarına etkileşim eklemek için tarayıcıda çalışabilir. Java ile isimleri benzese de farklı dillerdir. <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction">JavaScript rehberi</a></li>
-<li><strong>C#:</strong> Java gibi tür denetimi güçlü bir dildir. Temel ekosistemi .NET’tir; Java’da ise JVM öne çıkar. <a href="https://learn.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/overview">C# rehberi</a></li>
+<li><strong>Java:</strong> Bankacılık, e-ticaret ve kurumsal sistemlerde sunucu tarafı iş mantığı ve API geliştirmede kullanılır. Spring gibi araçlar bu alanda yaygındır. Masaüstü uygulamaları da yapılabilir; Android dünyasında Java koduyla da karşılaşırız, ancak Android’in çalışma ortamı masaüstündeki JVM ile aynı değildir.</li>
+<li><strong>Python:</strong> Veri analizi, yapay zekâ, bilimsel hesaplama ve tekrarlayan işleri otomatikleştirmede kullanılır. Django ve Flask gibi araçlarla web sunucusu da geliştirilebilir. Kısa sözdizimiyle hızlı denemeler yapmaya elverişlidir. <a href="https://www.python.org/about/apps/">Kullanım alanları</a></li>
+<li><strong>JavaScript / TypeScript:</strong> Web arayüzlerinin etkileşimli davranışlarını yazarız; Node.js ile sunucu tarafında da kullanılabilir. TypeScript, JavaScript’e geliştirme sırasında tür kontrolü ekler ve JavaScript’e dönüştürülür. Java ile JavaScript farklı dillerdir.</li>
+<li><strong>C#:</strong> .NET ekosisteminde web servisleri, masaüstü ve kurumsal uygulamalar; Unity ile oyun geliştirmede kullanılır. Java’ya benzer sınıf ve tür kavramları bulunur, ancak kütüphaneleri ve çalışma ortamı farklıdır.</li>
+<li><strong>C:</strong> İşletim sistemleri, donanım sürücüleri ve gömülü cihazlarda kullanılır. Bellek ve donanıma yakın kontrol sunar; bu kontrol, geliştiriciden daha fazla dikkat ister.</li>
+<li><strong>C++:</strong> Oyun motorları, grafik uygulamaları ve performans gerektiren masaüstü/sistem yazılımlarında kullanılır. Nesne yönelimli programlamayı düşük seviyeli kontrolle birleştirir.</li>
+<li><strong>Kotlin:</strong> Android uygulamaları ve JVM üzerinde sunucu uygulamaları geliştirmede kullanılır. Java kütüphaneleriyle birlikte çalışabilir; daha kısa yazım ve null güvenliği sunar. <a href="https://kotlinlang.org/docs/server-overview.html">Sunucu tarafında Kotlin</a></li>
+<li><strong>Swift:</strong> Özellikle iPhone, iPad ve Mac uygulamalarında kullanılır. Apple platformlarının arayüz ve sistem araçlarıyla bütünleşir.</li>
+<li><strong>Go:</strong> Ağ servisleri, bulut altyapısı ve komut satırı araçlarında kullanılır. Sade dil yapısı ve eşzamanlı işler için sunduğu araçlar öne çıkar. <a href="https://go.dev/solutions/use-cases">Kullanım alanları</a></li>
+<li><strong>Rust:</strong> Sistem araçları, performans odaklı servisler ve düşük seviyeli yazılımlarda kullanılır. Bellek güvenliğini derleme sırasında denetleyen kurallarıyla öne çıkar.</li>
+<li><strong>PHP:</strong> Sunucu tarafında web sayfaları ve web uygulamaları geliştirmede kullanılır. WordPress ve Laravel bu ekosistemin örnekleridir.</li>
+<li><strong>SQL:</strong> İlişkisel veritabanlarında veri sorgulama ve güncelleme dilidir. Genellikle Java gibi bir uygulama dilinin yanında kullanılır; tek başına bir web arayüzü oluşturmaz.</li>
 </ul>
-<p>Bir dil her işte diğerlerinden daha iyi değildir; seçim, yapılacak uygulamaya ve kullanılan araçlara bağlıdır.</p>
+<p>Java öğrenirken değişken, koşul, döngü ve metot gibi ortak kavramları da öğreniriz. Başka bir dile geçtiğimizde bu temel bilgiler işimize yarar; değişen şey sözdizimi, araçlar ve bazı çalışma kurallarıdır.</p>
+<h3 id="java-surumleri">Yıllara Göre Java Sürümleri</h3>
+<p>1995, Java’nın duyurulduğu yıl; 1996 ise JDK 1.0’ın yayımlandığı yıldır. Aşağıdaki özet ana sürümleri gruplar; her yama güncellemesini listelemez. Yeni kavramları şimdi ezberlemene gerek yok.</p>
+<ul class="intro-list">
+<li><strong>1996–1997 · 1.0 ve 1.1:</strong> İlk sürümler; temel dil, kütüphaneler ve veritabanı bağlantısı gibi yeteneklerin gelişimi.</li>
+<li><strong>1998 · 1.2:</strong> Collections Framework ve Swing ile koleksiyonlar ve masaüstü arayüzleri genişledi.</li>
+<li><strong>2000 · 1.3 / 2002 · 1.4:</strong> Çalışma ortamı iyileştirmeleri; 1.4’te assert, regex ve yeni I/O araçları.</li>
+<li><strong>2004 · Java 5:</strong> Generics, enum, enhanced for ve autoboxing gibi bugün sık kullanılan özellikler.</li>
+<li><strong>2006 · Java 6:</strong> Araçlar, performans ve kütüphanelerde iyileştirmeler.</li>
+<li><strong>2011 · Java 7:</strong> Try-with-resources, diamond operatörü ve dosya işlemleri için NIO.2.</li>
+<li><strong>2014 · Java 8 (LTS):</strong> Lambda, Stream API ve yeni tarih/saat API’si.</li>
+<li><strong>2017 · Java 9:</strong> Modül sistemi ve küçük kod denemeleri için JShell.</li>
+<li><strong>2018 · Java 10 ve 11:</strong> 10’da yerel değişkenlerde var; 11’de LTS sürümü ve tek kaynak dosyasını doğrudan çalıştırma.</li>
+<li><strong>2019–2020 · Java 12–15:</strong> Switch ifadeleri ve metin blokları gibi yeniliklerin önizlemelerden kalıcı özelliklere geçişi.</li>
+<li><strong>2021 · Java 16 ve 17:</strong> 16’da record kalıcı oldu; 17 LTS sürümüdür ve sealed sınıfları kalıcılaştırdı.</li>
+<li><strong>2022–2023 · Java 18–20:</strong> 18’de varsayılan UTF-8; sonraki sürümlerde yeni dil ve eşzamanlılık özelliklerinin önizlemeleri.</li>
+<li><strong>2023 · Java 21 (LTS):</strong> Virtual threads ve pattern matching for switch gibi yenilikler. Bu kursta kullandığımız sürüm.</li>
+<li><strong>2024–2025 · Java 22–24:</strong> Yeni API’ler, performans geliştirmeleri ve sonraki sürümlere hazırlık sağlayan önizlemeler.</li>
+<li><strong>2025 · Java 25 (LTS):</strong> Yeni uzun süreli destek sürümü; daha sade başlangıç programları ve constructor gövdelerinde esneklik.</li>
+<li><strong>2026 · Java 26 ve 27:</strong> Altı aylık sürüm düzenindeki yeni ana sürümler; dil, API ve JVM gelişimi sürüyor.</li>
+</ul>
+<p><strong>LTS</strong>, uzun süreli destek anlamına gelir; süre ve koşullar JDK sağlayıcısına göre değişir. Yeni ana sürümler yaklaşık altı ayda bir çıkar. Kurs için en yeni sürüme geçmek zorunda değilsin: <strong>JDK 21’in güncel yamasını</strong> kullanıyoruz. <code>21.0.x</code> aynı ana sürümün güncellemelerini ifade eder. <a href="https://ops.java/releases/">Sürüm tarihleri</a> · <a href="https://www.oracle.com/java/technologies/java-se-support-roadmap.html">LTS bilgileri</a> · <a href="https://www.oracle.com/java/technologies/downloads/">Güncel sürümler</a></p>
 <h2 id="konu-1">1.2 Java’nın Çalışma Mantığı</h2><h3>JDK Nedir?</h3><p class="">JDK, Java Development Kit ifadesinin kısaltmasıdır.</p><p class="">Java uygulamaları geliştirmek için gereken araçları içerir. Java kodunu derleyen javac derleyicisi de JDK içerisinde bulunur.</p><p class="label">Kısaca:</p><p class="">JDK = Java geliştirmek, derlemek ve çalıştırmak için kullanılan geliştirme paketi.</p><h3 id="konu-2">JRE Nedir?</h3><p class="">JRE, Java Runtime Environment ifadesinin kısaltmasıdır. Java ile yazılmış programların çalışması için gereken ortamı sağlar. JVM ve Java'nın çalışması için gerekli kütüphaneleri içerir.</p><p class="label">Kısaca:</p><p class="">JRE = Java programlarını çalıştırmak için gereken ortam.</p><h3 id="konu-3">JVM Nedir?</h3><p class="">JVM, Java Virtual Machine ifadesinin kısaltmasıdır.</p><p class="">Derlenmiş Java bytecode'unu çalıştırır.</p><p class="">Java kaynak kodunu bytecode'a dönüştüren JVM değildir. Bu işi JDK içerisinde bulunan javac derleyicisi yapar.</p><p class="label">Java programının temel çalışma akışı:</p><pre class="flow" aria-label="Java çalışma akışı">Hello.java
     ↓ javac
 Hello.class
     ↓ JVM
-Program çalışır</pre><p class="">.java dosyası kaynak koddur.</p><p class="">javac kaynak kodu .class dosyasına dönüştürür.</p><p class="">.class dosyasının içerisinde Java bytecode'u bulunur.</p><p class="">JVM bu bytecode'u çalıştırır.</p><p class="">Bu yapı Java'nın farklı işletim sistemlerinde çalışabilmesini sağlayan temel nedenlerden biridir.</p><h2 id="jdk-kurulumu">1.3 Kurulum ve İlk Program</h2>
+Program çalışır</pre><p class="">.java dosyası kaynak koddur.</p><p class="">javac kaynak kodu .class dosyasına dönüştürür.</p><p class="">.class dosyasının içerisinde Java bytecode'u bulunur.</p><p class="">JVM bu bytecode'u çalıştırır.</p><p class="">Bu yapı Java'nın farklı işletim sistemlerinde çalışabilmesini sağlayan temel nedenlerden biridir.</p><h3>Bytecode Nedir, Dönüşüm Nasıl Gerçekleşir?</h3>
+<p><strong>Kaynak kod</strong>, bizim okuyup yazdığımız Java metnidir. <strong>Bytecode</strong>, bu kod derlendiğinde oluşan, JVM’nin anlayacağı daha düşük seviyeli komutlardır. Bytecode, belirli bir işlemcinin doğrudan çalıştırdığı makine koduyla aynı şey değildir.</p>
+<ol class="intro-list">
+<li><strong>Yaz:</strong> <code>Hello.java</code> içinde sınıflar, metotlar ve komutlar bulunur.</li>
+<li><strong>Derle:</strong> <code>javac Hello.java</code> sözdizimini ve tür kurallarını denetler. Başarılı olursa bytecode ile sınıf bilgilerini taşıyan <code>Hello.class</code> oluşur. Bir kaynak dosya birden fazla sınıf içeriyorsa birden fazla .class üretilebilir.</li>
+<li><strong>Çalıştır:</strong> <code>java Hello</code> JVM’yi başlatır; JVM gerekli sınıfları yükler, doğrular ve main metodundan yürütmeyi başlatır.</li>
+<li><strong>İşlemcide yürüt:</strong> HotSpot JVM, bytecode’u yorumlayabilir; sık çalışan bölümleri JIT derleyicisiyle o makinenin işlemci koduna çevirerek hızlandırabilir.</li>
+</ol>
+<p>Aynı .class dosyası, uygun Java sürümü bulunan Windows, Linux veya macOS üzerinde çalışabilir. İşletim sistemine uygun olan parça JVM’dir. Yine de işletim sistemine özel kütüphaneler ve dosya yolları taşınabilirliği etkileyebilir. Yeni Java ile üretilen bytecode, daha eski JVM’de her zaman çalışmaz.</p>
+<p><strong>Uzantı değiştirmek derlemek değildir:</strong> <code>Hello.txt → Hello.java</code> yalnızca dosya adını değiştirir. <code>Hello.java → Hello.class</code> dönüşümünü ise javac yapar. .class, düzenlemeyi sürdürdüğümüz metin dosyası değildir. <a href="https://docs.oracle.com/en/java/javase/21/vm/java-hotspot-virtual-machine-performance-enhancements.html">HotSpot ve JIT</a></p>
+<h2 id="jdk-kurulumu">1.3 Kurulum ve İlk Program</h2>
 <h3>JDK Nereden İndirilir?</h3><p><strong>SDK</strong>, yazılım geliştirme araçları için kullanılan genel addır. Java için ihtiyaç duyduğumuz geliştirme paketi <strong>JDK</strong>’dır. JDK kurunca bu örnekler için ayrıca JRE kurman gerekmez.</p>
+<h3>Neden Eclipse Temurin Tercih Ettik?</h3>
+<p><strong>Eclipse Temurin</strong>, Eclipse Adoptium projesinin OpenJDK tabanlı, açık kaynaklı ve ücretsiz JDK dağıtımıdır. Java uyumluluk testlerinden geçmesi, farklı işletim sistemleri için hazır kurulum sunması ve JDK 21 seçimini kolaylaştırması nedeniyle kurs için bunu seçtik. Ayrı bir Java dili değildir; aynı Java kodunu uyumlu başka JDK dağıtımlarıyla da çalıştırabiliriz. <a href="https://adoptium.net/">Eclipse Adoptium</a></p>
+<p><strong>Eclipse Temurin ile Eclipse IDE aynı şey değildir.</strong> Temurin derleme/çalıştırma paketidir; Eclipse IDE kod yazma ortamıdır. Temurin’i IntelliJ IDEA ile kullanabiliriz. “Eclipse SDK” ifadesi yerine burada indirdiğimiz pakete <strong>Temurin JDK</strong> demek daha doğrudur.</p>
+<h3>Temurin JDK Kurulumu</h3>
 <ol class="intro-list">
 <li><a href="https://adoptium.net/temurin/releases/">Eclipse Temurin indirme sayfasını</a> aç. Bu notlar için <strong>JDK 21’in güncel yama sürümünü</strong> seçebilirsin. 21 bir LTS, yani uzun süre desteklenen sürümdür.</li>
 <li>İşletim sistemini ve işlemci mimarini seç. Standart Intel/AMD Windows bilgisayarlarda <strong>Windows / x64 / JDK / .msi</strong> uygundur; ARM cihazlarda mimariyi ayrıca kontrol et.</li>
@@ -37,13 +82,30 @@ Program çalışır</pre><p class="">.java dosyası kaynak koddur.</p><p class="
 javac -version</code></pre>
 <p>İki komut da sürüm bilgisi göstermeli. <code>javac</code> tanınmıyorsa JDK kurulumunu ve PATH içindeki JDK <code>bin</code> klasörünü kontrol et; ardından terminali yeniden aç. <a href="https://adoptium.net/installation/windows">Windows kurulum rehberi</a> · <a href="https://adoptium.net/support/">LTS sürümleri</a></p>
 
+<h3>Java.com’dan İndirmek İstersek?</h3>
+<p><a href="https://www.java.com/en/download/">Java.com’un standart indirme sayfası</a>, Java 8 ile hazır masaüstü programlarını çalıştırmaya yöneliktir. Bu paket, ders için gereken JDK 21’in yerine geçmez; yalnızca java komutunun bulunması javac’ın da kurulduğu anlamına gelmez.</p>
+<ol class="intro-list">
+<li><strong>Kod geliştirmek için:</strong> Java.com’daki geliştirici/JDK bağlantısını izle veya doğrudan <a href="https://www.oracle.com/java/technologies/downloads/">Oracle JDK indirme sayfasını</a> aç.</li>
+<li>Kursla aynı sürüm için <strong>JDK 21</strong> bölümünü, ardından işletim sistemini seç. Intel/AMD Windows bilgisayarda <strong>x64 Installer</strong> veya <strong>x64 MSI Installer</strong> ile kurulumu yap.</li>
+<li>Yeni terminalde <code>java -version</code> ve <code>javac -version</code> çalıştır. İkisi de seçtiğin sürümü göstermeli. Gerekirse JDK’nın bin klasörünü PATH’e ekle; IDE’de de aynı JDK’yı seç.</li>
+</ol>
+<p><strong>Yalnızca hazır bir Java 8 uygulamasını çalıştırmak için:</strong> Uygulamanın istediği sürümü doğrula; java.com indirme sayfasında işletim sistemine ve mimarine uygun paketi seçip kurulum sihirbazını tamamla. Bu yol, bu kursta kod derlemek için seçtiğimiz yol değildir.</p>
+<p>Temurin ve Oracle JDK aynı Java standardını uygular; dağıtım, destek ve lisans koşulları farklı olabilir. Oracle indirme sayfasında seçtiğin sürüme ait koşullar gösterilir.</p>
 <h3 id="komut-satiri">Komut Satırında İlk Java Programı</h3>
-<p>Boş bir klasörde, düz metin düzenleyicisiyle <code>Hello.java</code> dosyası oluştur. Dosya adı <code>Hello.java.txt</code> olmamalı. Şu kodu kaydet:</p>
+<p>Boş bir klasörde <strong>Yeni → Metin Belgesi</strong> ile <code>Hello.txt</code> oluştur. Not Defteri’nde aç, aşağıdaki kodu yaz ve kaydet. Ardından aşağıdaki adımlarla uzantısını .java yapacağız:</p>
 <pre class="code" tabindex="0" aria-label="Hello.java kod örneği"><code><span class="keyword">public</span> <span class="keyword">class</span> Hello {
     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
         System.out.println(<span class="string">"Merhaba Java!"</span>);
     }
 }</code></pre>
+<h3>Önemli Adım: Hello.txt → Hello.java</h3>
+<ol class="intro-list">
+<li>Kodu kaydettikten sonra Not Defteri’ni kapat.</li>
+<li>Dosya Gezgini’nde <strong>dosya adı uzantılarını göster</strong>. Windows 11’de Görünüm → Göster → Dosya adı uzantıları; Windows 10’da Görünüm sekmesindeki Dosya adı uzantıları seçeneğini kullan.</li>
+<li><code>Hello.txt</code> dosyasına sağ tıkla → Yeniden adlandır. Sondaki <strong>.txt</strong> bölümünü silip <strong>.java</strong> yaz: sonuç tam olarak <code>Hello.java</code> olsun.</li>
+<li>Uzantıyı değiştirme uyarısını onayla. <strong>Hello.java.txt yanlış, Hello.java doğru.</strong> Uzantılar gizliyken yalnızca görünen ada “.java” eklemek yeterli değildir.</li>
+</ol>
+<p>Dosyanın içeriği hâlâ düz metindir; uzantıyı değiştirmek kodu çalıştırmaz. Bir sonraki adımda javac ile derleyeceğiz. Alternatif olarak Not Defteri’nde Farklı Kaydet → Dosya türü: Tüm dosyalar → <code>Hello.java</code>, kodlama: UTF-8 seçerek baştan doğru adla kaydedebilirsin.</p>
 <p>Dosya adındaki <code>Hello</code> ile <code>public class Hello</code> aynı olmalı. Kodun ayrıntılarını <a href="main-metodu.html">ikinci bölümde</a> inceleyeceğiz.</p>
 <p>Windows Dosya Gezgini’nde bu klasörü aç; adres çubuğuna <code>cmd</code> yazıp Enter’a bas. Açılan komut satırında sırayla çalıştır:</p>
 <pre class="code" tabindex="0" aria-label="Derleme ve çalıştırma komutları"><code>javac Hello.java
@@ -56,10 +118,14 @@ java Hello</code></pre>
 <h2 id="ide">1.4 IDE ile Çalışma</h2>
 <p><strong>IDE</strong>, kod yazma, çalıştırma ve hata ayıklama araçlarını bir araya getiren geliştirme ortamıdır. Komutları her seferinde elle yazmak yerine <strong>Run</strong> düğmesiyle çalıştırabilirsin.</p>
 <ul class="intro-list">
-<li><a href="https://www.jetbrains.com/idea/download/">IntelliJ IDEA:</a> Kod tamamlama ve hata gösterimi sunar. Temel Java geliştirme özellikleri ücretsizdir.</li>
-<li><a href="https://www.eclipse.org/downloads/packages/">Eclipse:</a> Java geliştirmek için ücretsiz, açık kaynaklı bir alternatiftir.</li>
+<li><a href="https://www.jetbrains.com/idea/download/"><strong>IntelliJ IDEA:</strong></a> Akıllı kod tamamlama, yeniden adlandırma ve hata ayıklama araçları sunar. Kursta bununla ilerleyebiliriz; temel Java özellikleri ücretsiz, bazı ileri özellikler abonelik kapsamındadır.</li>
+<li><a href="https://www.eclipse.org/downloads/packages/"><strong>Eclipse IDE:</strong></a> Eklentilerle genişletilebilen açık kaynaklı bir ortamdır. Java için “Eclipse IDE for Java Developers” paketi başlangıç seçeneğidir. Temurin JDK ile karıştırma.</li>
+<li><a href="https://netbeans.apache.org/"><strong>Apache NetBeans:</strong></a> Java projeleri, kod tamamlama ve hata ayıklama için bütünleşik araçlar sunar. Swing masaüstü arayüzlerini görsel olarak tasarlama araçları da bulunur.</li>
+<li><a href="https://code.visualstudio.com/docs/java/java-tutorial"><strong>Visual Studio Code:</strong></a> Temelde bir kod editörüdür. JDK ve Extension Pack for Java kurulduğunda Java proje yönetimi, çalıştırma ve hata ayıklama yetenekleri eklenir.</li>
+<li><a href="https://www.bluej.org/"><strong>BlueJ:</strong></a> Eğitim odaklı, sade bir Java IDE’sidir. Sınıfları ve nesneler arasındaki ilişkileri görerek OOP öğrenmek için tasarlanmıştır.</li>
+<li><a href="https://developer.android.com/studio"><strong>Android Studio:</strong></a> Android uygulamaları için tasarlanmıştır; cihaz emülatörü ve mobil arayüz araçları içerir. Java/Kotlin destekler, fakat bu kurstaki basit konsol örnekleri için gerekli değildir.</li>
 </ul>
 <p>IntelliJ’de <strong>New Project → Java</strong> yolunu izle, JDK olarak kurduğun sürümü seç. Projenin <code>src</code> klasöründe <code>Hello</code> sınıfını oluştur, yukarıdaki kodu ekle ve <code>main</code> yanındaki çalıştırma düğmesine bas. JDK listede yoksa <strong>Add JDK</strong> ile kurulum klasörünü gösterebilirsin. <a href="https://www.jetbrains.com/help/idea/creating-and-running-your-first-java-application.html">IntelliJ başlangıç rehberi</a></p>
 <p><strong>IDE ile JDK farklıdır:</strong> IDE çalışma alanındır; projeyi derlemek ve çalıştırmak için seçtiği JDK’yı kullanır.</p>
-<h2 id="konu-4">Soru — Cevap</h2><p class="question">Soru: Hello.java dosyasını .class dosyasına dönüştüren şey nedir?</p><p class="answer">Cevap: JDK içerisinde bulunan javac derleyicisidir.</p><p class="question">Soru: JVM'in temel görevi nedir?</p><p class="answer">Cevap: Oluşturulmuş Java bytecode'unu çalıştırmaktır.</p><p class="question">Soru: JRE'nin görevi nedir?</p><p class="answer">Cevap: Java programlarının çalışması için gereken çalışma ortamını sağlamaktır.</p><p class="question">Soru: Bir bilgisayarda Java kodu geliştirilmeyecek, sadece hazır Java programları çalıştırılacaksa teorik olarak JDK mı JRE mi gerekir?</p><p class="answer">Cevap: JRE yeterlidir.</p><h3 id="konu-5">Kısa Hatırlatma</h3><p class="">JDK → geliştirir ve derler</p><p class="">JRE → çalışma ortamını sağlar</p><p class="">JVM → bytecode'u çalıştırır</p><p class="label">En kısa haliyle:</p><p class="">JDK geliştirir, javac derler, JVM çalıştırır.</p></article><nav class="pagination" aria-label="Bölümler arası geçiş"><span></span><a href="main-metodu.html"><small>Sonraki bölüm</small>main method print ve comments</a></nav><footer>Java Notları <span>·</span> 1 / 7</footer></main>
+<h2 id="konu-4">Soru — Cevap</h2><p class="question">Soru: Hello.java dosyasını .class dosyasına dönüştüren şey nedir?</p><p class="answer">Cevap: JDK içerisinde bulunan javac derleyicisidir.</p><p class="question">Soru: JVM'in temel görevi nedir?</p><p class="answer">Cevap: Oluşturulmuş Java bytecode'unu çalıştırmaktır.</p><p class="question">Soru: JRE'nin görevi nedir?</p><p class="answer">Cevap: Java programlarının çalışması için gereken çalışma ortamını sağlamaktır.</p><p class="question">Soru: Bir bilgisayarda Java kodu geliştirilmeyecek, sadece hazır Java programları çalıştırılacaksa teorik olarak JDK mı JRE mi gerekir?</p><p class="answer">Cevap: JRE yeterlidir.</p><p class="question">Soru: Hello.txt dosyasını Hello.java yapmak kodu derler mi?</p><p class="answer">Cevap: Hayır. Yalnızca uzantı değişir; bytecode üretmek için javac kullanılır.</p><p class="question">Soru: Temurin kullanırken Eclipse IDE kullanmak zorunda mıyız?</p><p class="answer">Cevap: Hayır. Temurin JDK, IntelliJ gibi başka geliştirme ortamlarıyla da kullanılabilir.</p><p class="question">Soru: Java.com’dan standart Java indirmesi yapmak bu kurs için yeterli mi?</p><p class="answer">Cevap: Hayır. Kod geliştirmek için JDK gerekir; kursta JDK 21 kullanıyoruz.</p><h3 id="konu-5">Kısa Hatırlatma</h3><p class="">JDK → geliştirir ve derler</p><p class="">JRE → çalışma ortamını sağlar</p><p class="">JVM → bytecode'u çalıştırır</p><p class="label">En kısa haliyle:</p><p class="">JDK geliştirir, javac derler, JVM çalıştırır.</p></article><nav class="pagination" aria-label="Bölümler arası geçiş"><span></span><a href="main-metodu.html"><small>Sonraki bölüm</small>main method print ve comments</a></nav><footer>Java Notları <span>·</span> 1 / 7</footer></main>
 <aside class="toc"><p class="nav-label">BU BÖLÜMDE</p><nav aria-label="Sayfa içindekiler"><a href="#java-tarihce">1.1 Java’yı Tanıyalım</a><a href="#konu-1">1.2 Java’nın Çalışma Mantığı</a><a href="#jdk-kurulumu">1.3 Kurulum ve İlk Program</a><a href="#ide">1.4 IDE ile Çalışma</a><a href="#konu-4">Soru — Cevap</a></nav></aside></div></body></html>
