@@ -8,7 +8,7 @@ Türkçe Java çalışma notlarından oluşan sade, statik bir web sitesi.
 2. Yazım Kuralları
 3. Değişkenler
 4. İşlemler
-5. Diziler, Koleksiyonlar, Lambda ve Stream API
+5. Koleksiyonlar
 6. Metotlar ve OOP
 7. Java’da İleri Konular ve Temel API’ler
 
