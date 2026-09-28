@@ -5,7 +5,7 @@ Türkçe Java çalışma notlarından oluşan sade, statik bir web sitesi.
 ## İçerik
 
 1. Giriş — kullanım alanları, sürümler, JDK, bytecode ve IDE’ler
-2. Syntax
+2. Yazım Kuralları
 3. Değişkenler ve Veri Tipleri
 4. Operatörler, Kontrol Yapıları ve Döngüler
 5. Diziler, Koleksiyonlar, Lambda ve Stream API
