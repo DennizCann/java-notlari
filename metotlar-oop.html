@@ -9,29 +9,25 @@
 <header class="topbar"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">J.</span><span>Java <strong>Notları</strong></span></a><span class="topbar-caption">Türkçe çalışma notları</span><button class="menu-toggle" type="button" aria-expanded="false" aria-controls="sidebar">☰ Konular</button></header>
 <div class="layout"><aside class="sidebar" id="sidebar"><p class="nav-label">KONU ANLATIMLARI</p><nav aria-label="Bölümler"><a href="index.html"><span class="chapter-number">01</span><span>Giriş</span></a><a href="main-metodu.html"><span class="chapter-number">02</span><span>Yazım Kuralları</span></a><a href="degiskenler.html"><span class="chapter-number">03</span><span>Değişkenler</span></a><a href="operatorler-donguler.html"><span class="chapter-number">04</span><span>İşlemler</span></a><a href="koleksiyonlar-stream.html"><span class="chapter-number">05</span><span>Koleksiyonlar</span></a><a href="metotlar-oop.html" aria-current="page"><span class="chapter-number">06</span><span>Metotlar ve OOP</span></a><a href="ileri-konular-api.html"><span class="chapter-number">07</span><span>Java’da İleri Konular ve Temel API’ler</span></a></nav><div class="sidebar-note"><span>JAVA TEMELLERİ</span><p>Çalışma mantığından<br>nesnelere.</p></div></aside>
 <main id="icerik" tabindex="-1"><div class="chapter-heading"><p class="eyebrow">JAVA TEMELLERİ <span>/</span> BÖLÜM 06</p><h1>Metotlar ve OOP</h1></div>
-<details class="mobile-toc"><summary>Bu bölümde</summary><nav aria-label="Bölüm içi bağlantılar"><a href="#sinif-nesne">6.1 Sınıflar ve Nesneler</a><a href="#metotlar">6.2 Metotlar ve Parametreler</a><a href="#constructor">6.3 Constructor ve this</a><a href="#kapsam">6.4 Kapsam ve Değer Aktarımı</a><a href="#encapsulation">6.5 Erişim, Paketler ve Encapsulation</a><a href="#static-final">6.6 static ve final</a><a href="#kalitim">6.7 Kalıtım, Composition ve Polymorphism</a><a href="#soyutlama">6.8 Abstract Sınıflar ve Interface</a><a href="#object-siralama">6.9 Nesneleri Temsil Etme ve Karşılaştırma</a><a href="#enum-ic-sinif">6.10 Enum ve İç Sınıflara Kısa Bakış</a><a href="#soru-cevap">Soru — Cevap</a></nav></details>
-<article><p>OOP, verileri ve bu verilerle çalışan davranışları nesnelerde bir araya getirir. Bir öğrencinin adı ve puanı veridir; kendini tanıtması veya puanının güncellenmesi davranıştır. Bu bölümde metotları bu ilişki üzerinden öğreneceğiz.</p><p>Her kod kutusu bağımsız bir örnektir. Bir seferde bir örneği <code>Main.java</code> dosyasına kopyalayıp çalıştır. Aynı isimli sınıfların farklı örneklerdeki sürümlerini tek projede yan yana ekleme.</p><h2 id="sinif-nesne">6.1 Sınıflar ve Nesneler</h2><p><strong>Sınıf</strong>, nesnenin hangi verileri ve davranışları taşıyacağını tanımlar. <strong>Nesne</strong> bu tanımdan oluşturulan örnektir. Sınıfın içindeki veri alanlarına <em>field</em>, davranışlarına metot denir.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">class</span> Student {
+<details class="mobile-toc"><summary>Bu bölümde</summary><nav aria-label="Bölüm içi bağlantılar"><a href="#sinif-nesne">6.1 Sınıflar ve Nesneler</a><a href="#metotlar">6.2 Metotlar ve Parametreler</a><a href="#constructor">6.3 Constructor ve this</a><a href="#kapsam">6.4 Kapsam ve Değer Aktarımı</a><a href="#encapsulation">6.5 Encapsulation</a><a href="#erisim">6.6 Erişim Belirleyiciler</a><a href="#paketler">6.7 Paketler</a><a href="#static-final">6.8 static ve final Değişkenler</a><a href="#kalitim">6.9 Kalıtım, Composition ve Polymorphism</a><a href="#soyutlama">6.10 Abstract Sınıflar ve Interface</a><a href="#object-siralama">6.11 Nesneleri Temsil Etme ve Karşılaştırma</a><a href="#enum-ic-sinif">6.12 Enum ve İç Sınıflara Kısa Bakış</a><a href="#soru-cevap">Soru — Cevap</a></nav></details>
+<article><p>OOP, verileri ve bu verilerle çalışan davranışları nesnelerde bir araya getirir. Bir öğrencinin adı ve puanı veridir; kendini tanıtması veya puanının güncellenmesi davranıştır. Bu bölümde metotları bu ilişki üzerinden öğreneceğiz.</p><p>Paketler bölümündeki dosya adları belirtilen örnek dışında her kod kutusu bağımsız bir örnektir. Bir seferde bir örneği <code>Main.java</code> dosyasına kopyalayıp çalıştır. Aynı isimli sınıfların farklı örneklerdeki sürümlerini tek projede yan yana ekleme.</p><h2 id="sinif-nesne">6.1 Sınıflar ve Nesneler</h2><p><strong>Sınıf</strong>, nesnenin hangi verileri ve davranışları taşıyacağını tanımlar. <strong>Nesne</strong> bu tanımdan oluşturulan örnektir. Sınıfın içindeki veri alanlarına <em>field</em>, davranışlarına metot denir.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code>class Student {
     String name;
-    <span class="keyword">int</span> score;
-
-    <span class="keyword">void</span> introduce() {
-        System.out.println(name + <span class="string">": "</span> + score);
-    }
+    int score;
 }
 
-<span class="keyword">public</span> <span class="keyword">class</span> Main {
-    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
-        Student first = <span class="keyword">new</span> Student();
-        first.name = <span class="string">"Deniz"</span>;
-        first.score = <span class="number">80</span>;
-        Student second = <span class="keyword">new</span> Student();
-        second.name = <span class="string">"Ece"</span>;
-        second.score = <span class="number">95</span>;
-        first.introduce();
-        second.introduce();
+public class Main {
+    public static void main(String[] args) {
+        Student first = new Student();
+        first.name = "Deniz";
+        first.score = 80;
+        Student second = new Student();
+        second.name = "Ece";
+        second.score = 95;
+        System.out.println(first.name + ": " + first.score);
+        System.out.println(second.name + ": " + second.score);
     }
 }</code></pre><p class="label">Çıktı:</p><pre class="flow">Deniz: 80
-Ece: 95</pre><p><code>new Student()</code> yeni nesne oluşturur. <code>first</code> bu nesneye referans tutar; nokta ile alanına veya metoduna erişiriz. İki nesnenin alanları birbirinden bağımsızdır. <code>Student other = first;</code> ise kopya nesne üretmez: iki değişken aynı nesneyi gösterir.</p><p>Burada sınıf alanlarına doğrudan eriştik. İleride bunları <code>private</code> yaparak değişiklikleri kontrol edeceğiz. Sayısal nesne alanları başlangıçta 0, boolean alanlar false, referans alanları null değerini alır; yerel değişkenler için aynı kural geçerli değildir.</p><h2 id="metotlar">6.2 Metotlar ve Parametreler</h2><p>Metot, adı üzerinden çağrılan bir iş parçasıdır. Aynı işi tekrar yazmayı azaltır. <code>int add(int a, int b)</code> tanımında ilk <code>int</code> dönüş tipi, <code>add</code> metot adı, <code>a</code> ve <code>b</code> parametrelerdir. <code>add(3, 4)</code> çağrısındaki 3 ve 4 ise argümanlardır.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">class</span> Calculator {
+Ece: 95</pre><p>new Student() yeni nesne oluşturur. first bu nesneye referans tutar; bu örnekte nokta ile alanlarına erişiriz. İki nesnenin alanları birbirinden bağımsızdır. Student other = first; ise kopya nesne üretmez: iki değişken aynı nesneyi gösterir.<code>new Student()</code> yeni nesne oluşturur. <code>first</code> bu nesneye referans tutar; nokta ile alanına veya metoduna erişiriz. İki nesnenin alanları birbirinden bağımsızdır. <code>Student other = first;</code> ise kopya nesne üretmez: iki değişken aynı nesneyi gösterir.</p><p>Burada sınıf alanlarına doğrudan eriştik. İleride bunları <code>private</code> yaparak değişiklikleri kontrol edeceğiz. Sayısal nesne alanları başlangıçta 0, boolean alanlar false, referans alanları null değerini alır; yerel değişkenler için aynı kural geçerli değildir.</p><h2 id="metotlar">6.2 Metotlar ve Parametreler</h2><p>Metot, adı üzerinden çağrılan bir iş parçasıdır. Aynı işi tekrar yazmayı azaltır. <code>int add(int a, int b)</code> tanımında ilk <code>int</code> dönüş tipi, <code>add</code> metot adı, <code>a</code> ve <code>b</code> parametrelerdir. <code>add(3, 4)</code> çağrısındaki 3 ve 4 ise argümanlardır.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">class</span> Calculator {
     <span class="keyword">int</span> add(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
         <span class="keyword">return</span> a + b;
     }
@@ -64,7 +60,31 @@ Ece: 95</pre><p><code>new Student()</code> yeni nesne oluşturur. <code>first</c
     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) {
         System.out.println(<span class="keyword">new</span> Counter().sum(<span class="number">3</span>));
     }
-}</code></pre><p class="label">Çıktı:</p><pre class="flow">6</pre><p>Çağrılar <code>3 + 2 + 1 + 0</code> sonucunu oluşturur. Sonsuz veya çok derin çağrılar <code>StackOverflowError</code> oluşturabilir; her problemi recursion ile çözmek gerekmez.</p><h2 id="constructor">6.3 Constructor ve this</h2><p>Constructor, yeni nesnenin başlangıç durumunu hazırlayan özel yapıdır. Adı sınıf adıyla aynıdır; dönüş tipi yazılmaz, <code>void</code> bile kullanılmaz. Hiç constructor yazılmazsa derleyici parametresiz bir tane sağlar. Bir constructor yazarsan bu otomatik parametresiz constructor artık eklenmez.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">class</span> Student {
+}</code></pre><p class="label">Çıktı:</p><pre class="flow">6</pre><p>Çağrılar <code>3 + 2 + 1 + 0</code> sonucunu oluşturur. Sonsuz veya çok derin çağrılar <code>StackOverflowError</code> oluşturabilir; her problemi recursion ile çözmek gerekmez.</p><h3>Nesne Metotları ve static Metotlar</h3><p>OOP’de metotlar nesnenin davranışını temsil eder. <strong>Non-static (nesne) metot</strong> belirli bir nesne üzerinden çağrılır; o nesnenin alanlarını okuyabilir ve değiştirebilir. <strong>Static metot</strong> sınıfa aittir; nesne oluşturmadan sınıf adıyla çağrılır. Aşağıda puan eklemek belirli bir öğrencinin işi, bir sayının geçerli puan olup olmadığını kontrol etmek ise nesne verisine ihtiyaç duymayan bir işlemdir.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code>class Student {
+    int score;
+
+    void addPoints(int points) {
+        score += points;
+    }
+
+    static boolean isValidScore(int value) {
+        return value &gt;= 0 &amp;&amp; value &lt;= 100;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Student first = new Student();
+        Student second = new Student();
+        first.addPoints(10);
+        second.addPoints(20);
+        System.out.println(first.score);
+        System.out.println(second.score);
+        System.out.println(Student.isValidScore(80));
+    }
+}</code></pre><p>Çıktı:</p><pre class="flow">10
+20
+true</pre><p><code>first.addPoints(10)</code> yalnızca first nesnesinin puanını değiştirir. <code>Student.isValidScore(80)</code> bir Student nesnesi gerektirmez. Static bir metotta <code>this</code> yoktur; nesne alanına veya nesne metoduna erişmek için bir nesne referansı gerekir. Main static olsa da içinde nesne oluşturup onun metotlarını çağırabiliriz. Her metodu static yapmak yerine davranışın bir nesnenin durumuna bağlı olup olmadığını düşünmeliyiz.</p><h2 id="constructor">6.3 Constructor ve this</h2><p>Constructor, yeni nesnenin başlangıç durumunu hazırlayan özel yapıdır. Adı sınıf adıyla aynıdır; dönüş tipi yazılmaz, <code>void</code> bile kullanılmaz. Hiç constructor yazılmazsa derleyici parametresiz bir tane sağlar. Bir constructor yazarsan bu otomatik parametresiz constructor artık eklenmez.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">class</span> Student {
     String name;
     <span class="keyword">int</span> score;
 
@@ -114,7 +134,7 @@ Ece: 95</pre><p><code>new Student()</code> yeni nesne oluşturur. <code>first</c
         System.out.println(box.value);
     }
 }</code></pre><p class="label">Çıktı:</p><pre class="flow">10
-99</pre><h2 id="encapsulation">6.5 Erişim, Paketler ve Encapsulation</h2><p>Encapsulation, nesnenin iç durumuna erişimi kontrol etmektir. Alanları <code>private</code> yapıp gereken işlemleri metotlarla sunabiliriz. Her alana otomatik getter ve setter eklemek zorunda değiliz; yalnızca ihtiyaç duyulan erişimi açarız.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">class</span> Student {
+99</pre><h2 id="encapsulation">6.5 Encapsulation</h2><p>Encapsulation, nesnenin iç durumuna erişimi kontrol etmektir. Alanları <code>private</code> yapıp gereken işlemleri metotlarla sunabiliriz. Her alana otomatik getter ve setter eklemek zorunda değiliz; yalnızca ihtiyaç duyulan erişimi açarız.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">class</span> Student {
     <span class="keyword">private</span> <span class="keyword">int</span> score;
 
     <span class="keyword">public</span> <span class="keyword">int</span> getScore() {
@@ -135,7 +155,49 @@ Ece: 95</pre><p><code>new Student()</code> yeni nesne oluşturur. <code>first</c
         student.setScore(<span class="number">120</span>);
         System.out.println(student.getScore());
     }
-}</code></pre><p class="label">Çıktı:</p><pre class="flow">85</pre><p>Bu örnekte geçersiz puan reddedilir ve önceki değer korunur. <code>student.score = 120;</code> dışarıdan yazılamaz. Gerçek uygulamada geçersiz girdiyi kullanıcıya bildirme veya hata üretme yaklaşımı da seçilebilir.</p><h3>Erişim Belirleyiciler</h3><p><code>public</code>: sınıfa erişebilen yerlerden kullanılabilir. <code>private</code>: doğrudan sınıf içi kullanımı hedefler. Belirleyici yazılmazsa <strong>package-private</strong> olur, aynı paketle sınırlıdır. <code>protected</code>: aynı paketten ve başka paketteki alt sınıflardan, kalıtımın erişim kurallarıyla kullanılabilir. Her yerden erişim sağlamaz.</p><h3>package ve import</h3><p>Paketler sınıfları gruplar. Dosyanın başındaki <code>package school;</code>, sınıfın paketini belirtir; kaynak klasörü altında <code>school</code> diziniyle eşleştirilir. <code>import java.util.ArrayList;</code> başka paketteki sınıfı kısa adıyla kullanmamızı sağlar. Import, erişim kısıtlamalarını kaldırmaz. <code>java.lang</code> içindeki String ve System gibi sınıflar ayrıca import istemez.</p><h2 id="static-final">6.6 static ve final</h2><p><code>static</code> üyeler sınıfa, normal alan ve metotlar nesneye aittir. Örneğin okul adı bütün öğrenciler için ortak olabilir; öğrencinin adı ise her nesnede farklıdır. Static üyeye <code>Student.school</code> gibi sınıf üzerinden erişmek daha açıktır.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">class</span> Student {
+}</code></pre><p class="label">Çıktı:</p><pre class="flow">85</pre><p>Bu örnekte geçersiz puan reddedilir ve önceki değer korunur. <code>student.score = 120;</code> dışarıdan yazılamaz. Gerçek uygulamada geçersiz girdiyi kullanıcıya bildirme veya hata üretme yaklaşımı da seçilebilir.</p><h2 id="erisim">6.6 Erişim Belirleyiciler</h2><p>Erişim belirleyiciler, bir sınıfın veya üyenin nereden kullanılabileceğini kontrol eder. <code>static</code>, <code>final</code> ve <code>abstract</code> erişim belirleyici değildir; farklı görevleri olan anahtar kelimelerdir.</p><ul class="intro-list">
+<li><strong>public:</strong> Sınıfın kendisi de erişilebiliyorsa diğer paketlerden kullanılabilir. Dışarıya sunulan metotlarda sık görülür.</li>
+<li><strong>private:</strong> Üyeyi tanımlandığı sınıfın içinde tutar; başka bir bağımsız sınıf doğrudan erişemez. İç içe sınıflar arasında Java’nın izin verdiği özel erişim vardır. Nesnenin iç durumunu korumak için uygundur.</li>
+<li><strong>package-private:</strong> Hiçbir erişim belirleyici yazılmazsa oluşur. Aynı paketteki sınıflar erişebilir. Bunun için “default” anahtar kelimesi yazılmaz.</li>
+<li><strong>protected:</strong> Aynı pakette erişilebilir; ayrıca başka paketteki alt sınıflarda kalıtım yoluyla kullanılabilir. Başka paketteki alt sınıf, üst sınıfın rastgele bir nesnesi üzerinden bu üyeye erişemez; nesne üyelerinde referansın türü de önemlidir.</li>
+</ul><p>Üst düzey sınıflar <code>public</code> veya package-private olabilir; <code>private</code> ve <code>protected</code> üst düzey sınıfa yazılmaz. Alanlar, metotlar ve constructor’lar dört erişim düzeyini de kullanabilir. Yerel değişkenlere bu belirleyiciler eklenmez. Public bir üyenin dışarıdan kullanılabilmesi için onu içeren sınıfa da erişilebilmelidir.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code>class AccessExample {
+    public String name = "Deniz";
+    protected int score = 80;
+    String school = "Java Kursu"; // package-private
+    private String password = "demo";
+
+    public boolean checkPassword(String value) {
+        return password.equals(value);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        AccessExample student = new AccessExample();
+        System.out.println(student.name);
+        System.out.println(student.score);  // Aynı paket
+        System.out.println(student.school); // Aynı paket
+        System.out.println(student.checkPassword("demo"));
+        // student.password erişilemez: private.
+    }
+}</code></pre><p>Bu örnekte sınıflar aynı pakettedir. <code>password</code> doğrudan okunamaz; public metot yalnızca kontrol sonucunu sunar. Bu, erişim kontrolünü gösteren bir örnektir; gerçek uygulamalarda parolalar düz metin saklanmaz.</p><h2 id="paketler">6.7 Paketler</h2><p>Paketler ilgili sınıfları gruplar ve aynı adlı sınıfları ayırır. Örneğin <code>school.Student</code> ile <code>course.Student</code> farklı tiplerdir. Paket adları genellikle küçük harfle yazılır; büyük projelerde <code>com.example.school</code> gibi adlar kullanılır.</p><p><code>package</code> bildirimi yorumlar dışında dosyanın ilk bölümündedir; ardından import’lar ve sınıf gelir. Aşağıdaki örnek <strong>iki ayrı dosyadır</strong>. Kaynak kökü altında dosya yolları paket adlarını izler:</p><p><strong>school/Student.java</strong></p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code>package school;
+
+public class Student {
+    public String name;
+
+    public Student(String name) {
+        this.name = name;
+    }
+}</code></pre><p><strong>app/Main.java</strong></p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code>package app;
+
+import school.Student;
+
+public class Main {
+    public static void main(String[] args) {
+        Student student = new Student("Deniz");
+        System.out.println(student.name);
+    }
+}</code></pre><p>Kaynak kökünde <code>javac -encoding UTF-8 -d out school/Student.java app/Main.java</code> ile derle; <code>java -cp out app.Main</code> ile çalıştır. Çıktı <code>Deniz</code> olur. IDE kullanıyorsan kaynak klasöründe school ve app paketlerini oluşturman yeterlidir.</p><p><code>import school.Student;</code>, sınıfı kısa adıyla kullanmayı sağlar. Import olmadan <code>school.Student</code> tam adı kullanılabilir. Import dosyayı kopyalamaz ve erişim engellerini kaldırmaz. <code>import school.*;</code> alt paketleri kapsamaz. <code>school</code> ile <code>school.tools</code> ayrı paketlerdir; package-private erişim aralarında paylaşılmaz.</p><p><code>java.lang</code> içindeki String ve System otomatik kullanılabilir; aynı paketteki sınıflar da import istemez. <code>import static java.lang.Math.PI;</code> gibi static import ise bir static üyeyi sınıf adını yazmadan kullanmaya yarar. Import, bir kütüphane indirme veya projeye bağımlılık ekleme işlemi değildir.</p><h2 id="static-final">6.8 static ve final Değişkenler</h2><p><code>static</code> üyeler sınıfa, normal alan ve metotlar nesneye aittir. Örneğin okul adı bütün öğrenciler için ortak olabilir; öğrencinin adı ise her nesnede farklıdır. Static üyeye <code>Student.school</code> gibi sınıf üzerinden erişmek daha açıktır.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">class</span> Student {
     <span class="keyword">static</span> String school = <span class="string">"Java Kursu"</span>;
     <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MAX_SCORE = <span class="number">100</span>;
     <span class="keyword">final</span> String name;
@@ -154,7 +216,7 @@ Ece: 95</pre><p><code>new Student()</code> yeni nesne oluşturur. <code>first</c
     }
 }</code></pre><p class="label">Çıktı:</p><pre class="flow">Java Kursu
 Deniz
-100</pre><p>Klasik <code>main</code> metodu static olduğu için Main nesnesi oluşturmadan çağrılabilir. Static bir metot içinde <code>this</code> kullanılamaz; nesne alanına erişmek için bir nesne referansı gerekir.</p><p><code>final</code> değişkene yeniden atamayı engeller. Final nesne referansı, nesnenin bütün alanlarını değişmez yapmaz. <code>final</code> metot override edilemez; <code>final</code> sınıftan kalıtım yapılamaz. <code>static final</code> ortak sabitler için sık kullanılır.</p><h2 id="kalitim">6.7 Kalıtım, Composition ve Polymorphism</h2><p><strong>Inheritance</strong> bir “türüdür” ilişkisi kurar: öğrenci bir kişidir. <code>extends</code> ile alt sınıf oluşturulur. Java’da bir sınıf doğrudan yalnızca bir sınıftan türeyebilir. Constructor’lar miras alınmaz; alt nesne oluşturulurken üst sınıf constructor’ı da çalışır.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">class</span> Person {
+100</pre><p>Klasik <code>main</code> metodu static olduğu için Main nesnesi oluşturmadan çağrılabilir. Static bir metot içinde <code>this</code> kullanılamaz; nesne alanına erişmek için bir nesne referansı gerekir.</p><p>final değişkene yeniden atamayı engeller. Final nesne referansı, nesnenin bütün alanlarını değişmez yapmaz. static final ortak sabitler için sık kullanılır.<code>final</code> değişkene yeniden atamayı engeller. Final nesne referansı, nesnenin bütün alanlarını değişmez yapmaz. <code>final</code> metot override edilemez; <code>final</code> sınıftan kalıtım yapılamaz. <code>static final</code> ortak sabitler için sık kullanılır.</p><h2 id="kalitim">6.9 Kalıtım, Composition ve Polymorphism</h2><p><strong>Inheritance</strong> bir “türüdür” ilişkisi kurar: öğrenci bir kişidir. <code>extends</code> ile alt sınıf oluşturulur. Java’da bir sınıf doğrudan yalnızca bir sınıftan türeyebilir. Constructor’lar miras alınmaz; alt nesne oluşturulurken üst sınıf constructor’ı da çalışır.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">class</span> Person {
     <span class="keyword">private</span> String name;
 
     Person(String name) {
@@ -182,7 +244,32 @@ Deniz
         Person person = <span class="keyword">new</span> Student(<span class="string">"Deniz"</span>);
         System.out.println(person.describe());
     }
-}</code></pre><p class="label">Çıktı:</p><pre class="flow">Öğrenci: Deniz</pre><p><code>super(name)</code> üst constructor’ı, <code>super.describe()</code> üst metodun uygulamasını çağırır. Üst sınıfta uygun parametresiz constructor yoksa alt sınıf uygun üst constructor’ı açıkça çağırmalıdır.</p><h3>Overriding ve Polymorphism</h3><p>Overriding, miras alınan bir nesne metodunun davranışını alt sınıfta yeniden tanımlamaktır. <code>@Override</code> derleyicinin bunu kontrol etmesini sağlar. Overloading farklı parametrelerle aynı adı kullanmaktı; overriding aynı metodu alt sınıfta özelleştirir. Erişim daraltılamaz; private metot override edilmez, static metotlar nesne metodu gibi polymorphism göstermez.</p><p>Örnekte referansın tipi Person, nesnenin gerçek tipi Student’tır. Çağrılan nesne metodunun Student sürümü çalışır: bu polymorphism’dir. Üst tip referansıyla yalnızca o tipin sunduğu üyelere erişilebilir. Alt tipe dönüşüm gerekiyorsa <code>instanceof</code> ile uygunluğu kontrol etmek gerekir; her Person bir Student değildir.</p><h3>Composition</h3><p>Composition bir “sahiptir” ilişkisidir: öğrenci bir adrese sahiptir. Böyle bir durumda <code>Student extends Address</code> yerine Student içinde <code>Address address;</code> alanı tutarız. Kalıtımı yalnızca kod tekrarını azaltmak için değil, doğru tür ilişkisini modellemek için seçmeliyiz.</p><h2 id="soyutlama">6.8 Abstract Sınıflar ve Interface</h2><p>Soyutlama, kullanım için gerekli davranışı tanımlayıp ayrıntıları uygulamaya bırakır. Abstract sınıf ortak alan, constructor ve hazır metotlar barındırabilir; abstract metotlar gövdesizdir. Abstract sınıftan doğrudan nesne oluşturulamaz.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">abstract</span> <span class="keyword">class</span> Course {
+}</code></pre><p class="label">Çıktı:</p><pre class="flow">Öğrenci: Deniz</pre><p><code>super(name)</code> üst constructor’ı, <code>super.describe()</code> üst metodun uygulamasını çağırır. Üst sınıfta uygun parametresiz constructor yoksa alt sınıf uygun üst constructor’ı açıkça çağırmalıdır.</p><h3>Overriding ve Polymorphism</h3><p>Overriding, miras alınan bir nesne metodunun davranışını alt sınıfta yeniden tanımlamaktır. <code>@Override</code> derleyicinin bunu kontrol etmesini sağlar. Overloading farklı parametrelerle aynı adı kullanmaktı; overriding aynı metodu alt sınıfta özelleştirir. Erişim daraltılamaz; private metot override edilmez, static metotlar nesne metodu gibi polymorphism göstermez.</p><p>Örnekte referansın tipi Person, nesnenin gerçek tipi Student’tır. Çağrılan nesne metodunun Student sürümü çalışır: bu polymorphism’dir. Üst tip referansıyla yalnızca o tipin sunduğu üyelere erişilebilir. Alt tipe dönüşüm gerekiyorsa <code>instanceof</code> ile uygunluğu kontrol etmek gerekir; her Person bir Student değildir.</p><h3>Composition</h3><p>Composition bir “sahiptir” ilişkisidir: öğrenci bir adrese sahiptir. Böyle bir durumda <code>Student extends Address</code> yerine Student içinde <code>Address address;</code> alanı tutarız. Kalıtımı yalnızca kod tekrarını azaltmak için değil, doğru tür ilişkisini modellemek için seçmeliyiz.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code>class Address {
+    final String city;
+
+    Address(String city) {
+        this.city = city;
+    }
+}
+
+class Student {
+    private final Address address;
+
+    Student(String city) {
+        address = new Address(city);
+    }
+
+    String city() {
+        return address.city;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Student student = new Student("İstanbul");
+        System.out.println(student.city());
+    }
+}</code></pre><p>Çıktı:</p><pre class="flow">İstanbul</pre><p>Student kendi Address nesnesini oluşturup alanında tutar ve city metoduyla ondan yararlanır. Öğrenci bir adres değildir; bir adrese sahiptir. Bu yüzden extends kullanmadık.</p><h2 id="soyutlama">6.10 Abstract Sınıflar ve Interface</h2><p>Soyutlama, kullanım için gerekli davranışı tanımlayıp ayrıntıları uygulamaya bırakır. Abstract sınıf ortak alan, constructor ve hazır metotlar barındırabilir; abstract metotlar gövdesizdir. Abstract sınıftan doğrudan nesne oluşturulamaz.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">abstract</span> <span class="keyword">class</span> Course {
     <span class="keyword">abstract</span> String title();
 
     <span class="keyword">void</span> printTitle() {
@@ -214,7 +301,33 @@ Deniz
         registration.enroll();
     }
 }</code></pre><p class="label">Çıktı:</p><pre class="flow">Java
-Kayıt tamamlandı</pre><p>Interface bir sözleşmedir. <code>implements</code> bu sözleşmeyi uyguladığımızı söyler. Yukarıdaki gövdesiz interface metodu public ve abstract’tır; uygulaması public olmalıdır. Bir sınıf birden fazla interface uygulayabilir.</p><p>Interface’ler nesneye ait değişken alan veya constructor taşımaz. Alanları sabittir: <code>public static final</code>. Ortak gövdeli <code>default</code> ve <code>static</code> metotlar da tanımlanabilir. Ortak durum ve temel uygulama için abstract sınıf; farklı sınıflara ortak yetenek kazandırmak için interface düşünülebilir.</p><h2 id="object-siralama">6.9 Nesneleri Temsil Etme ve Karşılaştırma</h2><p>Sınıflar dolaylı veya doğrudan Object’ten türemiştir. <code>toString()</code> okunabilir metin temsilini verir. Nesnelerde <code>==</code> aynı nesne referansını karşılaştırır. <code>equals()</code> özel olarak tanımlanmazsa Object’in referans eşitliği davranışını kullanır.</p><p>Mantıksal eşitliği tanımlarken <code>equals()</code> ile <code>hashCode()</code> birlikte düşünülmelidir. Eşit nesnelerin hash değerleri aynı olmalıdır; aynı hash değeri nesnelerin eşit olduğunu kanıtlamaz. Bu ilişki HashSet ve HashMap için önemlidir.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">final</span> <span class="keyword">class</span> Student {
+Kayıt tamamlandı</pre><p>Interface bir sözleşmedir. <code>implements</code> bu sözleşmeyi uyguladığımızı söyler. Yukarıdaki gövdesiz interface metodu public ve abstract’tır; uygulaması public olmalıdır. Bir sınıf birden fazla interface uygulayabilir.</p><p>Interface’ler nesneye ait değişken alan veya constructor taşımaz. Alanları sabittir: <code>public static final</code>. Ortak gövdeli <code>default</code> ve <code>static</code> metotlar da tanımlanabilir. Ortak durum ve temel uygulama için abstract sınıf; farklı sınıflara ortak yetenek kazandırmak için interface düşünülebilir.</p><h3>Interface ile Ortak Davranış</h3><pre class="code" tabindex="0" aria-label="Java kod örneği"><code>interface Printable {
+    void print();
+}
+
+class Invoice implements Printable {
+    @Override
+    public void print() {
+        System.out.println("Fatura yazdırıldı");
+    }
+}
+
+class Report implements Printable {
+    @Override
+    public void print() {
+        System.out.println("Rapor yazdırıldı");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Printable[] documents = {new Invoice(), new Report()};
+        for (Printable document : documents) {
+            document.print();
+        }
+    }
+}</code></pre><p>Çıktı:</p><pre class="flow">Fatura yazdırıldı
+Rapor yazdırıldı</pre><p>Invoice ve Report aynı Printable sözleşmesini uygular. Döngü somut sınıfları bilmeden print çağırır; her nesnenin kendi uygulaması çalışır. Interface türünde referans tutabiliriz ama <code>new Printable()</code> ile doğrudan interface nesnesi oluşturamayız.</p><h2 id="object-siralama">6.11 Nesneleri Temsil Etme ve Karşılaştırma</h2><p>Sınıflar dolaylı veya doğrudan Object’ten türemiştir. <code>toString()</code> okunabilir metin temsilini verir. Nesnelerde <code>==</code> aynı nesne referansını karşılaştırır. <code>equals()</code> özel olarak tanımlanmazsa Object’in referans eşitliği davranışını kullanır.</p><p>Mantıksal eşitliği tanımlarken <code>equals()</code> ile <code>hashCode()</code> birlikte düşünülmelidir. Eşit nesnelerin hash değerleri aynı olmalıdır; aynı hash değeri nesnelerin eşit olduğunu kanıtlamaz. Bu ilişki HashSet ve HashMap için önemlidir.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">final</span> <span class="keyword">class</span> Student {
     <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> id;
 
     Student(<span class="keyword">int</span> id) {
@@ -250,7 +363,7 @@ Kayıt tamamlandı</pre><p>Interface bir sözleşmedir. <code>implements</code> 
     }
 }</code></pre><p class="label">Çıktı:</p><pre class="flow">false
 true
-Student(7)</pre><h2 id="enum-ic-sinif">6.10 Enum ve İç Sınıflara Kısa Bakış</h2><p><code>enum</code> sınırlı seçenekleri anlamlı isimlerle ifade eder. Örneğin kayıt durumu ACTIVE veya COMPLETED olabilir. Enum alan, metot ve constructor içerebilir; yeni enum sabiti <code>new</code> ile oluşturulmaz.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">enum</span> Status {
+Student(7)</pre><h2 id="enum-ic-sinif">6.12 Enum ve İç Sınıflara Kısa Bakış</h2><p><code>enum</code> sınırlı seçenekleri anlamlı isimlerle ifade eder. Örneğin kayıt durumu ACTIVE veya COMPLETED olabilir. Enum alan, metot ve constructor içerebilir; yeni enum sabiti <code>new</code> ile oluşturulmaz.</p><pre class="code" tabindex="0" aria-label="Java kod örneği"><code><span class="keyword">enum</span> Status {
     ACTIVE(<span class="string">"Devam ediyor"</span>), COMPLETED(<span class="string">"Tamamlandı"</span>);
 
     <span class="keyword">private</span> <span class="keyword">final</span> String label;
@@ -272,4 +385,4 @@ Student(7)</pre><h2 id="enum-ic-sinif">6.10 Enum ve İç Sınıflara Kısa Bakı
     }
 }</code></pre><p class="label">Çıktı:</p><pre class="flow">ACTIVE
 Devam ediyor</pre><p>Bir sınıf başka bir sınıfın içinde tanımlanabilir. Static olmayan inner class bir dış nesneye bağlıdır; static nested class dış nesne gerektirmez. Anonymous class ise bir sınıfı genişleten veya interface’i uygulayan, adı olmayan tek kullanımlık sınıf tanımıdır. Functional interface’in tek davranışı için lambda çoğu zaman daha kısa bir seçenektir.</p><h2 id="soru-cevap">Soru — Cevap</h2><p class="question">Soru: Student second = first; yeni nesne oluşturur mu?</p><p class="answer">Cevap: Hayır. İki değişken aynı nesneyi gösterir; bağımsız nesne için new gerekir.</p><p class="question">Soru: Bir metodun sonucu yazdırması, değer döndürmesiyle aynı mı?</p><p class="answer">Cevap: Hayır. println konsola yazar; return sonucu çağırana verir.</p><p class="question">Soru: Yalnızca dönüş tipini değiştirerek overloading yapılır mı?</p><p class="answer">Cevap: Hayır. Parametre listesi farklı olmalıdır.</p><p class="question">Soru: Constructor’a void yazılır mı?</p><p class="answer">Cevap: Hayır. Constructor’ın dönüş tipi yoktur.</p><p class="question">Soru: Bir nesne metoda gönderilirse referansın kendisi değiştirilebilir mi?</p><p class="answer">Cevap: Parametreye yeni nesne atanması çağıranın referansını değiştirmez. Ancak paylaşılan nesnenin değiştirilebilir alanları etkilenebilir.</p><p class="question">Soru: final nesne referansı nesneyi değişmez yapar mı?</p><p class="answer">Cevap: Hayır. Yalnızca referansa yeniden atamayı engeller.</p><p class="question">Soru: Person p = new Student(...); için hangi describe çalışır?</p><p class="answer">Cevap: Override edilmişse gerçek nesnenin, yani Student’ın nesne metodu çalışır.</p><p class="question">Soru: Abstract sınıftan doğrudan nesne oluşturulur mu?</p><p class="answer">Cevap: Hayır. Somut bir alt sınıf gerekir.</p><p class="question">Soru: Bir sınıf iki sınıftan extends ile türeyebilir mi?</p><p class="answer">Cevap: Hayır; fakat birden fazla interface uygulayabilir.</p><p class="question">Soru: equals ile eşit iki nesnenin hashCode değerleri nasıl olmalıdır?</p><p class="answer">Cevap: Aynı olmalıdır. Tersi zorunlu değildir.</p><p>Başvuru: <a href="https://dev.java/learn/classes-objects/">Sınıflar ve nesneler</a> · <a href="https://dev.java/learn/inheritance/">Kalıtım</a> · <a href="https://dev.java/learn/interfaces/">Interface</a>. Konu kontrol listesi: <a href="https://www.w3schools.com/java/java_oop.asp">W3Schools Java</a>.</p></article><nav class="pagination" aria-label="Bölümler arası geçiş"><a href="koleksiyonlar-stream.html"><small>Önceki bölüm</small>Koleksiyonlar</a><a href="ileri-konular-api.html"><small>Sonraki bölüm</small>Java’da İleri Konular ve Temel API’ler</a></nav><footer>Java Notları <span>·</span> 6 / 7</footer></main>
-<aside class="toc"><p class="nav-label">BU BÖLÜMDE</p><nav aria-label="Sayfa içindekiler"><a href="#sinif-nesne">6.1 Sınıflar ve Nesneler</a><a href="#metotlar">6.2 Metotlar ve Parametreler</a><a href="#constructor">6.3 Constructor ve this</a><a href="#kapsam">6.4 Kapsam ve Değer Aktarımı</a><a href="#encapsulation">6.5 Erişim, Paketler ve Encapsulation</a><a href="#static-final">6.6 static ve final</a><a href="#kalitim">6.7 Kalıtım, Composition ve Polymorphism</a><a href="#soyutlama">6.8 Abstract Sınıflar ve Interface</a><a href="#object-siralama">6.9 Nesneleri Temsil Etme ve Karşılaştırma</a><a href="#enum-ic-sinif">6.10 Enum ve İç Sınıflara Kısa Bakış</a><a href="#soru-cevap">Soru — Cevap</a></nav></aside></div></body></html>
+<aside class="toc"><p class="nav-label">BU BÖLÜMDE</p><nav aria-label="Sayfa içindekiler"><a href="#sinif-nesne">6.1 Sınıflar ve Nesneler</a><a href="#metotlar">6.2 Metotlar ve Parametreler</a><a href="#constructor">6.3 Constructor ve this</a><a href="#kapsam">6.4 Kapsam ve Değer Aktarımı</a><a href="#encapsulation">6.5 Encapsulation</a><a href="#erisim">6.6 Erişim Belirleyiciler</a><a href="#paketler">6.7 Paketler</a><a href="#static-final">6.8 static ve final Değişkenler</a><a href="#kalitim">6.9 Kalıtım, Composition ve Polymorphism</a><a href="#soyutlama">6.10 Abstract Sınıflar ve Interface</a><a href="#object-siralama">6.11 Nesneleri Temsil Etme ve Karşılaştırma</a><a href="#enum-ic-sinif">6.12 Enum ve İç Sınıflara Kısa Bakış</a><a href="#soru-cevap">Soru — Cevap</a></nav></aside></div></body></html>
